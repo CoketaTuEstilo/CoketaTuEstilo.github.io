@@ -8,21 +8,39 @@
     --color-acento-rosa: #FF70A6;       /* Rosa Fucsia vibrante */
     --color-pastel-suave: #FFEBF1;      /* Rosa pálido muy suave */
     
-    /* Degradados Vivos (Acentos Lujosos) */
-    --degradado-principal: linear-gradient(45deg, #B3003A, #FF3366); /* Borgoña a Rojo vivo */
-    --degradado-acento: linear-gradient(45deg, #FF70A6, #FF9A8B);   /* Rosa a Coral suave */
+    /* Variables para el Nuevo Fondo Degradado */
+    --color-fondo-inicio: #FFF5F7;      /* Rosa/Blanco muy claro y cálido */
+    --color-fondo-final: #F4E2E7;       /* Rosa Sucio/Borgoña muy suave */
     
-    --color-texto: #4A4A4A; /* Gris Oscuro y Profesional */
+    /* Degradados Vivos (Acentos Lujosos) */
+    --degradado-principal: linear-gradient(45deg, #B3003A, #FF3366); 
+    --degradado-acento: linear-gradient(45deg, #FF70A6, #FF9A8B);   
+    
+    --color-texto: #4A4A4A; 
 }
 
 body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: var(--color-pastel-suave);
     color: var(--color-texto);
     line-height: 1.6;
     overflow-x: hidden;
+    
+    /* >>>>>>> CÓDIGO CLAVE PARA EL FONDO DEGRADADO <<<<<<< */
+    /* 1. Definir el degradado vertical usando las variables */
+    background: linear-gradient(
+        to bottom, 
+        var(--color-fondo-inicio), 
+        var(--color-fondo-final)
+    );
+    
+    /* 2. Asegurar que el degradado cubra toda la altura del contenido */
+    background-repeat: no-repeat;
+    min-height: 100vh; /* Para que al menos cubra la ventana */
+    
+    /* 3. Fijar el degradado, pero permitir que crezca con el contenido */
+    background-attachment: local; 
 }
 
 /* ---------------------------------
@@ -325,4 +343,5 @@ header h1 {
 
 .pulse-animation {
     animation: pulse 0.3s ease-in-out;
+
 }
