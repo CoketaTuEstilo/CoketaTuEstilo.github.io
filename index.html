@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Femenina y Elegante - Pedido por WhatsApp</title>
+    
+    <link rel="stylesheet" href="styles.css">
+    
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    
+    
+</head>
+<body>
+    
+    <div id="carrito-icon" onclick="toggleCarrito()">
+        🛒 <span id="carrito-contador">0</span>
+    </div>
+
+    <div id="carrito-sidebar">
+        <h2>🛍️ Tu Carrito</h2>
+        <div id="carrito-list">
+            <p id="carrito-vacio">El carrito está vacío.</p>
+            <ul>
+                </ul>
+        </div>
+
+        <div id="carrito-total-container">
+            <p style="font-size: 1.2em; font-weight: bold;">Subtotal: <span id="carrito-subtotal">$0.00</span></p>
+            <button class="btn btn-acento" id="btn-total" onclick="mostrarTotalYLink()">
+                TOTAL y Finalizar Compra
+            </button>
+        </div>
+
+        <div id="resumen-pedido">
+            </div>
+
+        <button class="btn btn-principal" style="margin-top: 15px;" onclick="toggleCarrito()">
+            Seguir Comprando
+        </button>
+    </div>
+
+    <header>
+        <h1>Coketa Tu Es</h1>
+        <p>Tu tienda con un estilo único.</p>
+    </header>
+
+    <div class="container">
+        <h2 data-aos="fade-right">Productos Destacados</h2>
+        <div class="productos-grid" id="productos-grid">
+            </div>
+    </div>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true,
+        });
+    </script>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

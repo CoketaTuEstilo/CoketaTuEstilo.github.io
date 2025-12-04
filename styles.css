@@ -1,0 +1,328 @@
+/* ========================================
+   ESTILOS CSS - Femenino, Elegante (Rosados y Rojos)
+   ========================================
+*/
+:root {
+    /* Colores Base Rosados y Borgoña */
+    --color-principal-elegante: #B3003A; /* Borgoña oscuro / Rojo elegante */
+    --color-acento-rosa: #FF70A6;       /* Rosa Fucsia vibrante */
+    --color-pastel-suave: #FFEBF1;      /* Rosa pálido muy suave */
+    
+    /* Degradados Vivos (Acentos Lujosos) */
+    --degradado-principal: linear-gradient(45deg, #B3003A, #FF3366); /* Borgoña a Rojo vivo */
+    --degradado-acento: linear-gradient(45deg, #FF70A6, #FF9A8B);   /* Rosa a Coral suave */
+    
+    --color-texto: #4A4A4A; /* Gris Oscuro y Profesional */
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-pastel-suave);
+    color: var(--color-texto);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* ---------------------------------
+1.1. HEADER y BARRA DE NAVEGACIÓN
+--------------------------------- */
+header {
+    background: var(--degradado-principal);
+    color: white;
+    padding: 25px 0;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 3em;
+    letter-spacing: 3px;
+    font-weight: 700;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+/* ---------------------------------
+1.2. PRODUCTOS Y TARJETAS (NUEVO ESTILO CON HOVER)
+--------------------------------- */
+.productos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.producto-card {
+    /* Contenedor principal para la animación */
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    overflow: hidden; /* Ocultar el detalle hasta el hover */
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.producto-card:hover {
+    transform: translateY(-5px); /* Pequeña elevación */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.producto-imagen-container {
+    width: 100%;
+    height: 250px; /* Altura fija para la imagen */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.producto-imagen-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que la imagen cubra el área sin deformarse */
+    transition: transform 0.6s ease;
+}
+
+.producto-card:hover .producto-imagen-container img {
+    transform: scale(1.1); /* Zoom sutil en la imagen al hacer hover */
+}
+
+/* Detalle del Producto (La pequeña pestaña que se abre) */
+.producto-detalle {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px; /* Altura de la pestaña que se abre */
+    background: rgba(179, 0, 58, 0.95); /* Fondo Borgoña semi-transparente */
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    /* Animación: Oculto por defecto y se desliza hacia arriba */
+    transform: translateY(100%); 
+    transition: transform 0.4s ease-out;
+    box-sizing: border-box;
+}
+
+.producto-card:hover .producto-detalle {
+    transform: translateY(0); /* Se desliza para ser visible */
+}
+
+.producto-detalle h3 {
+    margin: 5px 0 2px 0;
+    font-size: 1.4em;
+    color: white;
+}
+
+.producto-detalle p {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: var(--color-acento-rosa); /* Precio Rosa en la pestaña */
+    margin: 0;
+}
+
+.producto-card .btn-principal {
+    /* Mover el botón abajo de la tarjeta, fuera de la zona del hover */
+    margin-top: 15px;
+    position: relative;
+    z-index: 10; 
+}
+
+
+/* ---------------------------------
+1.3. ESTILOS DE BOTONES 
+--------------------------------- */
+.btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-principal {
+    background: var(--degradado-principal);
+    color: white;
+}
+
+.btn-principal:hover {
+    transform: scale(1.08) translateY(-2px);
+    box-shadow: 0 8px 15px rgba(179, 0, 58, 0.4);
+    opacity: 0.9;
+}
+
+.btn-acento {
+    background: var(--degradado-acento);
+    color: white;
+    margin-top: 20px;
+}
+
+.btn-acento:hover {
+    transform: scale(1.05) rotateZ(-1deg);
+    box-shadow: 0 8px 15px rgba(255, 112, 166, 0.4);
+}
+
+/* ---------------------------------
+1.4. CARRITO SIDEBAR y Icono
+--------------------------------- */
+#carrito-icon {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--degradado-acento);
+    color: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(255, 112, 166, 0.5);
+    z-index: 1001;
+}
+
+#carrito-contador {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--color-principal-elegante);
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.7em;
+    font-weight: bold;
+}
+
+/* ---------------------------------
+1.4. CARRITO SIDEBAR y Icono
+--------------------------------- */
+/* ... otras reglas ... */
+
+#carrito-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 380px;
+    height: 100%;
+    background-color: white;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
+    padding: 30px 30px 100px 30px;
+    transform: translateX(100%);
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: 1000;
+    overflow-y: auto; 
+    /* Esta propiedad permite que el contenido interno de la barra se desplace
+       verticalmente si excede el 100% de la altura de la pantalla. */
+}
+
+#carrito-sidebar.abierto {
+    transform: translateX(0);
+}
+
+#carrito-list ul {
+    list-style: none;
+    padding: 0;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+#carrito-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--color-pastel-suave);
+}
+
+#carrito-total-container {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid var(--color-principal-elegante);
+}
+
+/* ---------------------------------
+1.5. RESULTADO WHATSAPP
+--------------------------------- */
+#resumen-pedido {
+    margin-top: 30px;
+    padding: 25px;
+    border: 3px solid var(--color-principal-elegante);
+    background-color: #fff5f8;
+    border-radius: 12px;
+    display: none;
+}
+
+#resumen-pedido.visible {
+    display: block;
+}
+
+#whatsappLink {
+    width: 100%;
+    height: 80px;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid var(--color-acento-rosa);
+    border-radius: 4px;
+    resize: none;
+    font-size: 0.85em;
+    color: var(--color-principal-elegante);
+    background-color: #fff;
+}
+
+.cta-whatsapp {
+    display: inline-block;
+    background-color: #25d366;
+    color: white;
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 50px;
+    margin-left: 10px;
+    box-shadow: 0 4px 8px rgba(37, 211, 102, 0.4);
+    transition: all 0.3s ease;
+}
+
+.cta-whatsapp:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+/* ========================================
+   3. ESTILOS DE LA ANIMACIÓN FLY-TO-CART
+   ========================================
+*/
+.fly-to-cart-effect {
+    position: fixed;
+    z-index: 9999; /* Asegurar que esté por encima de todo */
+    width: 150px; /* Tamaño inicial de la imagen voladora */
+    height: 150px;
+    border-radius: 10px;
+    object-fit: cover;
+    pointer-events: none; /* No interactuar con el mouse */
+    
+    /* Duración de la animación (0.7s) */
+    transition: all 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Efecto PULSE en el icono del carrito al terminar la animación */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.pulse-animation {
+    animation: pulse 0.3s ease-in-out;
+}
