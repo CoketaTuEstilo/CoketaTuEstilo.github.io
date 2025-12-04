@@ -4,7 +4,7 @@
 */
 
 // Número de WhatsApp de la empresa (¡IMPORTANTE: Reemplazar con el tuyo!)
-const NUMERO_EMPRESA = "5493834786741"; 
+const NUMERO_EMPRESA = "5493834988696"; 
 
 // Base de Datos de Productos
 const productosDisponibles = [
@@ -236,4 +236,5 @@ function agregarAlCarrito(id, nombre, precio) {
     }
     
     actualizarVistaCarrito();
+
 }
