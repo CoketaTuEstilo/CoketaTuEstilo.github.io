@@ -4,13 +4,13 @@
 */
 :root {
     /* Colores Base Rosados y Borgoña */
-    --color-principal-elegante: #B3003A; /* Borgoña oscuro / Rojo elegante */
+    --color-principal-elegante: #FF3366; /* Borgoña oscuro / Rojo elegante */
     --color-acento-rosa: #FF70A6;       /* Rosa Fucsia vibrante */
-    --color-pastel-suave: #FFEBF1;      /* Rosa pálido muy suave */
+    --color-pastel-suave: #fff8eb;      /* Rosa pálido muy suave */
     
     /* Variables para el Nuevo Fondo Degradado */
-    --color-fondo-inicio: #FFF5F7;      /* Rosa/Blanco muy claro y cálido */
-    --color-fondo-final: #F4E2E7;       /* Rosa Sucio/Borgoña muy suave */
+    --color-fondo-inicio: #FF9A8B;      /* Rosa/Blanco muy claro y cálido */
+    --color-fondo-final: #FF70A6;       /* Rosa Sucio/Borgoña muy suave */
     
     /* Degradados Vivos (Acentos Lujosos) */
     --degradado-principal: linear-gradient(45deg, #B3003A, #FF3366); 
@@ -48,7 +48,7 @@ body {
 --------------------------------- */
 header {
     background: var(--degradado-principal);
-    color: white;
+    color: rgb(255, 255, 255);
     padding: 25px 0;
     text-align: center;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -201,7 +201,7 @@ header h1 {
     top: 20px;
     right: 20px;
     background: var(--degradado-acento);
-    color: white;
+    color: rgb(255, 93, 120);
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -237,7 +237,7 @@ header h1 {
     right: 0;
     width: 380px;
     height: 100%;
-    background-color: white;
+    background-color: rgb(255, 147, 143);
     box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
     padding: 30px 30px 100px 30px;
     transform: translateX(100%);
