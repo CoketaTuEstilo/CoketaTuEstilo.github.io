@@ -1,0 +1,2742 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Online - Coketa Tu Estilo</title>
+    <style>
+        /* ===== ESTILOS GENERALES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            overflow-x: hidden;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5deg); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes flyToCart {
+            0% { 
+                transform: scale(1) rotate(0deg); 
+                opacity: 1; 
+            }
+            50% { 
+                transform: scale(0.5) rotate(180deg); 
+                opacity: 0.8; 
+            }
+            100% { 
+                transform: scale(0) rotate(360deg); 
+                opacity: 0; 
+            }
+        }
+
+        @keyframes cartShake {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(-5deg); }
+            75% { transform: scale(1.1) rotate(5deg); }
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #c44569 100%);
+            padding: 80px 20px;
+            text-align: center;
+            color: white;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .titulo-principal {
+            font-size: 4rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+        }
+
+        /* ===== BÚSQUEDA ===== */
+        .busqueda-container {
+            background: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .busqueda-box {
+            position: relative;
+            display: inline-block;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .busqueda-input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .busqueda-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .busqueda-btn {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .busqueda-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .resultados-busqueda {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+            display: none;
+        }
+
+        .resultado-item {
+            padding: 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+
+        .resultado-item:hover {
+            background: #f5f5f5;
+            transform: translateX(5px);
+        }
+
+        .resultado-item:last-child {
+            border-bottom: none;
+        }
+
+        .resultado-nombre {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .resultado-precio {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .resultado-categoria {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* ===== CATEGORÍAS ===== */
+        .categorias-container {
+            padding: 60px 20px;
+            text-align: center;
+            background: white;
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+
+        .categorias-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .categoria-btn {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            border: none;
+            padding: 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            animation: fadeIn 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .categoria-btn:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+            background: linear-gradient(135deg, #fecfef 0%, #ff9a9e 100%);
+            animation: bounce 0.6s ease-in-out;
+        }
+
+        /* ===== SECCIÓN COLORES - PALETA PROFESIONAL ===== */
+        .colores-seccion {
+            display: none;
+            background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+            color: white;
+        }
+
+        .colores-seccion.activa {
+            display: block;
+        }
+
+        .titulo-seccion {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #f0f0f0;
+        }
+
+        .filtros-colores {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .filtro-btn {
+            background: #444;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .filtro-btn:hover,
+        .filtro-btn.activo {
+            background: #667eea;
+            transform: scale(1.05);
+        }
+
+        .colores-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .color-card {
+            background: #2c2c2c;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .color-card:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .color-muestra {
+            width: 100%;
+            height: 70px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border: 2px solid transparent;
+            transition: border 0.3s ease;
+        }
+
+        .color-card:hover .color-muestra {
+            border-color: #fff;
+        }
+
+        .color-nombre {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #f0f0f0;
+            margin-bottom: 4px;
+        }
+
+        .color-codigo {
+            font-size: 0.7rem;
+            color: #ccc;
+            margin-bottom: 6px;
+            font-family: monospace;
+        }
+
+        .color-precio {
+            font-size: 0.9rem;
+            color: #f093fb;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .agregar-color-carrito {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: bold;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .agregar-color-carrito:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        /* ===== PRODUCTOS ===== */
+        .productos-seccion {
+            display: none;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .productos-seccion.activa {
+            display: block;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .productos-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .producto-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            animation: fadeIn 0.8s ease-out;
+            animation-fill-mode: both;
+            min-height: 280px;
+        }
+
+        .producto-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .producto-imagen {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .producto-imagen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .producto-card:hover .producto-imagen img {
+            transform: scale(1.2);
+        }
+
+        .producto-info {
+            padding: 15px;
+            text-align: center;
+            background: rgb(0, 0, 0);
+        }
+
+        .producto-nombre {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 8px;
+            min-height: 2.6em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .producto-precio {
+            font-size: 1.2rem;
+            color: #fcb635;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .agregar-carrito {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 5px;
+            display: inline-block;
+        }
+
+        .agregar-carrito:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            animation: pulse 0.6s ease-in-out;
+        }
+
+        .volver-inicio {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 30px auto 20px auto;
+            display: block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-weight: bold;
+        }
+
+        .volver-inicio:hover {
+            background: white;
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            color: #e74c3c;
+        }
+
+        .productos-grid {
+    display: grid; /* Activa el modo rejilla */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Esto hace que sea responsivo */
+    gap: 30px; /* <--- ESTE ES EL ESPACIO (Vertical y Horizontal) */
+    padding: 20px; /* Espacio opcional alrededor de toda la cuadrícula */
+}
+        /* ===== CARRITO ===== */
+        .carrito-icono {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            z-index: 1001;
+            transition: all 0.3s ease;
+            animation: bounce 2s infinite;
+        }
+
+        .carrito-icono:hover {
+            transform: scale(1.1) rotate(10deg);
+            animation: none;
+        }
+
+        .carrito-icono.con-productos {
+            animation: cartShake 0.5s ease-in-out;
+        }
+
+        .carrito-container {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            max-width: 350px;
+            max-height: 70vh;
+            overflow-y: auto;
+            transform: translateX(400px);
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            opacity: 0;
+        }
+
+        .carrito-container.activo {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .carrito-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .carrito-titulo {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .carrito-cantidad {
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+            animation: pulse 0.6s ease-in-out;
+        }
+
+        .carrito-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            animation: slideInRight 0.5s ease-out;
+        }
+
+        .carrito-item-info {
+            flex: 1;
+        }
+
+        .carrito-item-nombre {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .carrito-item-precio {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .eliminar-item {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .eliminar-item:hover {
+            background: #c0392b;
+            transform: scale(1.1);
+        }
+
+        .carrito-total {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+
+        .total-texto {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .comprar-total {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            width: 100%;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .comprar-total:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #38ef7d 0%, #11998e 100%);
+            animation: pulse 0.6s ease-in-out;
+        }
+
+        .link-compra {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border: 1px solid #ddd;
+        }
+
+        .link-texto {
+            font-size: 0.9rem;
+            color: #666;
+            word-break: break-all;
+            margin-bottom: 10px;
+        }
+
+        .copiar-link {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .copiar-link:hover {
+            background: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .instrucciones {
+            font-size: 0.8rem;
+            color: #888;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: #000000;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer h3 {
+            color: #ffffff;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .footer p {
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        /* ===== ANIMACIÓN DE VUELO AL CARRITO ===== */
+        .producto-volando {
+            position: fixed;
+            z-index: 9999;
+            pointer-events: none;
+            transition: all 0.8s cubic-bezier(0.5, 0, 0.5, 1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .titulo-principal {
+                font-size: 2.5rem;
+            }
+            .categorias-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 15px;
+            }
+            .productos-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+                padding: 0 15px;
+            }
+            .colores-grid {
+                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+                gap: 10px;
+            }
+            .color-card {
+                padding: 8px 5px;
+            }
+            .color-muestra {
+                height: 50px;
+            }
+            .color-nombre {
+                font-size: 0.7rem;
+            }
+            .color-codigo {
+                font-size: 0.6rem;
+            }
+            .color-precio {
+                font-size: 0.7rem;
+            }
+            .agregar-color-carrito {
+                padding: 4px 8px;
+                font-size: 0.7rem;
+            }
+        }
+        /* ===== AVISO DE DESCUENTO ===== */
+.descuento-aviso {
+    background: linear-gradient(135deg, #ff9a00, #ffcd3c);
+    color: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    animation: pulse 1s ease-in-out infinite;
+    box-shadow: 0 4px 15px rgba(255, 154, 0, 0.4);
+}
+
+.descuento-aviso.verde {
+    background: linear-gradient(135deg, #11998e, #38ef7d);
+    box-shadow: 0 4px 15px rgba(17, 153, 142, 0.4);
+}
+
+.descuento-aviso.rojo {
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    box-shadow: 0 4px 15px rgba(255, 65, 108, 0.4);
+}
+
+.descuento-texto {
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+/* ===== ETIQUETA NO DISPONIBLE ===== */
+.no-disponible-etiqueta {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 3px 10px rgba(255, 65, 108, 0.4);
+    z-index: 10;
+    animation: pulse 2s infinite;
+}
+
+.producto-card.no-disponible {
+    opacity: 0.7;
+    filter: grayscale(0.3);
+}
+
+.producto-card.no-disponible .producto-nombre {
+    color: #888;
+    text-decoration: line-through;
+}
+
+.producto-card.no-disponible .agregar-carrito {
+    background: #ccc;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.producto-card.no-disponible .agregar-carrito::after {
+    content: ' - No Disponible';
+}
+
+/* Para colores/tintes no disponibles */
+.color-card.no-disponible {
+    opacity: 0.6;
+    filter: grayscale(0.5);
+}
+
+.color-card.no-disponible .color-nombre {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.color-card.no-disponible .agregar-color-carrito {
+    background: #666;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.color-card.no-disponible .no-disponible-etiqueta {
+    font-size: 0.65rem;
+    padding: 3px 8px;
+}
+
+/* ===== BOTÓN UBICACIÓN ===== */
+.ubicacion-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ubicacion-btn:hover {
+    transform: scale(1.05) translateY(-3px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+}
+
+.ubicacion-btn::before {
+    content: '📍';
+    font-size: 1.2rem;
+}
+
+/* ===== SECCIÓN UBICACIÓN ===== */
+.ubicacion-seccion {
+    display: none;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+.ubicacion-seccion.activa {
+    display: block;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.ubicacion-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.ubicacion-titulo {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+/* ===== MAPA ===== */
+.mapa-container {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    margin-bottom: 30px;
+}
+
+.mapa-iframe {
+    width: 100%;
+    height: 400px;
+    border: none;
+}
+
+.mapa-direccion {
+    padding: 20px;
+    background: white;
+    text-align: center;
+    font-size: 1.1rem;
+    color: #555;
+    border-top: 3px solid #667eea;
+}
+
+.mapa-direccion strong {
+    color: #667eea;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* ===== HORARIOS ===== */
+.horarios-container {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+.horarios-titulo {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.horarios-titulo::before {
+    content: '🕒';
+    font-size: 2rem;
+}
+
+.horarios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.horario-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.horario-item.abierto {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+}
+
+.horario-item.cerrado {
+    background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+    color: white;
+    opacity: 0.7;
+}
+
+.horario-item.especial {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+}
+
+.horario-dia {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.horario-hora {
+    font-size: 0.95rem;
+    opacity: 0.95;
+}
+
+.horario-estado {
+    font-size: 0.8rem;
+    padding: 3px 10px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.3);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* ===== INFO ADICIONAL ===== */
+.ubicacion-info {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.info-card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+}
+
+.info-icono {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.info-titulo {
+    font-size: 1rem;
+    color: #667eea;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.info-texto {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* ===== BOTÓN VOLVER ===== */
+.volver-btn-ubicacion {
+    display: block;
+    margin: 30px auto 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.volver-btn-ubicacion:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .ubicacion-btn {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
+    
+    .mapa-iframe {
+        height: 300px;
+    }
+    
+    .horarios-grid {
+        grid-template-columns: 1fr;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- ===== HEADER ===== -->
+    <div class="header" id="inicio">
+        <h1 class="titulo-principal">Coketa Tu Estilo</h1>
+    </div>
+
+    <!-- ===== BÚSQUEDA ===== -->
+    <div class="busqueda-container">
+        <div class="busqueda-box">
+            <input type="text" class="busqueda-input" placeholder="Buscar producto..." id="busqueda-input" oninput="buscarProducto()">
+            <button class="busqueda-btn" onclick="buscarProducto()">🔍</button>
+            <div class="resultados-busqueda" id="resultados-busqueda"></div>
+        </div>
+    </div>
+
+    <!-- ===== CATEGORÍAS ===== -->
+    <div class="categorias-container">
+        <div class="categorias-grid">
+            <button class="categoria-btn" onclick="mostrarCategoria('electronica')">Vella</button>
+            <button class="categoria-btn" onclick="mostrarCategoria('ropa')">Bekim</button>
+            <button class="categoria-btn" onclick="mostrarCategoria('hogar')">Skala</button>
+            <button class="categoria-btn" onclick="mostrarCategoria('deportes')">Eurostil</button>
+            <button class="categoria-btn" onclick="mostrarCategoria('belleza')">Giana-B</button>
+            <button class="categoria-btn" onclick="mostrarCategoria('juguetes')">Iyosei</button>
+            <button class="categoria-btn" onclick="mostrarCategoria('libros')">Nov</button>
+            <button class="categoria-btn" onclick="mostrarCategoria('alimentos')">Novalook</button>
+            <button class="categoria-btn" onclick="mostrarCategoria('jardineria')">Victa</button>
+            <button class="categoria-btn" onclick="mostrarColores()">Colores o Tintes</button>
+        </div>
+    </div>
+
+    <!-- ===== SECCIÓN COLORES - PALETA PROFESIONAL ===== -->
+    <div id="colores" class="colores-seccion">
+        <h2 class="titulo-seccion">Colores o Tintes</h2>
+        <div class="filtros-colores">
+            <button class="filtro-btn activo" onclick="cargarColores('todos')">Todos</button>
+            <button class="filtro-btn" onclick="cargarColores('rubio')">Rubios</button>
+            <button class="filtro-btn" onclick="cargarColores('castaño')">Castaños</button>
+            <button class="filtro-btn" onclick="cargarColores('rojo')">Rojos</button>
+            <button class="filtro-btn" onclick="cargarColores('negro')">Negros</button>
+            <button class="filtro-btn" onclick="cargarColores('violeta')">Violetas</button>
+            <button class="filtro-btn" onclick="cargarColores('azul')">Azules</button>
+            <button class="filtro-btn" onclick="cargarColores('verde')">Verdes</button>
+            <button class="filtro-btn" onclick="cargarColores('naranja')">Naranjas</button>
+            <button class="filtro-btn" onclick="cargarColores('rosa')">Rosas</button>
+            <button class="filtro-btn" onclick="cargarColores('marrón')">Marrónes</button>
+            <button class="filtro-btn" onclick="cargarColores('gris')">Grises</button>
+            <button class="filtro-btn" onclick="cargarColores('pastel')">Pastel</button>
+        </div>
+        <div class="colores-grid" id="colores-grid"></div>
+        <button class="volver-inicio" onclick="volverAlInicio()">Volver al Inicio</button>
+    </div>
+
+    <!-- ===== SECCIÓN ELECTRÓNICA (Ejemplo) ===== -->
+    <div id="electronica" class="productos-seccion">
+        <h2 class="titulo-seccion">Vella</h2>
+        <div class="productos-grid">
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/667eea/ffffff?text=Smartphone" alt="Smartphone Pro">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Smartphone Pro</div>
+                    <div class="producto-precio">$599</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Smartphone Pro', 599, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/764ba2/ffffff?text=Laptop" alt="Laptop Ultra">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Laptop Ultra</div>
+                    <div class="producto-precio">$899</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Laptop Ultra', 899, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/f093fb/ffffff?text=Auriculares" alt="Auriculares Premium">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Auriculares Premium</div>
+                    <div class="producto-precio">$199</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Auriculares Premium', 199, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/f5576c/ffffff?text=Tablet" alt="Tablet Pro">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Tablet Pro</div>
+                    <div class="producto-precio">$449</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Tablet Pro', 449, event)">Agregar al carrito</button>
+                </div>
+            </div>
+        </div>
+        <button class="volver-inicio" onclick="volverAlInicio()">Volver al Inicio</button>
+    </div>
+
+    <!-- ===== SECCIÓN ROPA - Productos de vestimenta ===== -->
+    <div id="ropa" class="productos-seccion">
+        <h2 class="titulo-seccion">Bekim</h2>
+        <div class="productos-grid">
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/ff6b6b/ffffff?text=Camiseta" alt="Camiseta Premium">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Camiseta Premium</div>
+                    <div class="producto-precio">$29</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Camiseta Premium', 29, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/ff8787/ffffff?text=Jeans" alt="Jeans Clásicos">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Jeans Clásicos</div>
+                    <div class="producto-precio">$59</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Jeans Clásicos', 59, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/ffa8a8/ffffff?text=Chaqueta" alt="Chaqueta Deportiva">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Chaqueta Deportiva</div>
+                    <div class="producto-precio">$89</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Chaqueta Deportiva', 89, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/ff6b9d/ffffff?text=Zapatos" alt="Zapatos Deportivos">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Zapatos Deportivos</div>
+                    <div class="producto-precio">$79</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Zapatos Deportivos', 79, event)">Agregar al carrito</button>
+                </div>
+            </div>
+        </div>
+        <button class="volver-inicio" onclick="volverAlInicio()">Volver al Inicio</button>
+    </div>
+
+    <!-- ===== SECCIÓN HOGAR - Productos para el hogar ===== -->
+    <div id="hogar" class="productos-seccion">
+        <h2 class="titulo-seccion">Skala</h2>
+        <div class="productos-grid">
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/c44569/ffffff?text=Lámpara" alt="Lámpara LED">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Lámpara LED</div>
+                    <div class="producto-precio">$45</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Lámpara LED', 45, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/667eea/ffffff?text=Almohada" alt="Almohada Memory Foam">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Almohada Memory Foam</div>
+                    <div class="producto-precio">$35</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Almohada Memory Foam', 35, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/764ba2/ffffff?text=Cortinas" alt="Cortinas Blackout">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Cortinas Blackout</div>
+                    <div class="producto-precio">$65</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Cortinas Blackout', 65, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/f093fb/ffffff?text=Cojín" alt="Cojín Decorativo">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Cojín Decorativo</div>
+                    <div class="producto-precio">$25</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Cojín Decorativo', 25, event)">Agregar al carrito</button>
+                </div>
+            </div>
+        </div>
+        <button class="volver-inicio" onclick="volverAlInicio()">Volver al Inicio</button>
+    </div>
+
+    <!-- ===== SECCIÓN DEPORTES - Productos deportivos ===== -->
+    <div id="deportes" class="productos-seccion">
+        <h2 class="titulo-seccion">Eurostil</h2>
+        <div class="productos-grid">
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/f5576c/ffffff?text=Balón" alt="Balón Profesional">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Balón Profesional</div>
+                    <div class="producto-precio">$39</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Balón Profesional', 39, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/ff9a9e/ffffff?text=Pesas" alt="Set de Pesas">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Set de Pesas</div>
+                    <div class="producto-precio">$79</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Set de Pesas', 79, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/fecfef/ffffff?text=Yoga" alt="Colchoneta Yoga">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Colchoneta Yoga</div>
+                    <div class="producto-precio">$25</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Colchoneta Yoga', 25, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/667eea/ffffff?text=Bicicleta" alt="Bicicleta Estática">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Bicicleta Estática</div>
+                    <div class="producto-precio">$299</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Bicicleta Estática', 299, event)">Agregar al carrito</button>
+                </div>
+            </div>
+        </div>
+        <button class="volver-inicio" onclick="volverAlInicio()">Volver al Inicio</button>
+    </div>
+
+    <!-- ===== SECCIÓN BELLEZA - Productos de belleza ===== -->
+    <div id="belleza" class="productos-seccion">
+        <h2 class="titulo-seccion">Giana-B</h2>
+        <div class="productos-grid">
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/764ba2/ffffff?text=Crema" alt="Crema Hidratante">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Crema Hidratante</div>
+                    <div class="producto-precio">$19</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Crema Hidratante', 19, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/f093fb/ffffff?text=Maquillaje" alt="Kit de Maquillaje">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Kit de Maquillaje</div>
+                    <div class="producto-precio">$49</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Kit de Maquillaje', 49, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/f5576c/ffffff?text=Perfume" alt="Perfume Elegante">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Perfume Elegante</div>
+                    <div class="producto-precio">$69</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Perfume Elegante', 69, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/ffa8a8/ffffff?text=Shampoo" alt="Shampoo Premium">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Shampoo Premium</div>
+                    <div class="producto-precio">$15</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Shampoo Premium', 15, event)">Agregar al carrito</button>
+                </div>
+            </div>
+        </div>
+        <button class="volver-inicio" onclick="volverAlInicio()">Volver al Inicio</button>
+    </div>
+
+    <!-- ===== SECCIÓN JUGUETES - Productos para niños ===== -->
+    <div id="juguetes" class="productos-seccion">
+        <h2 class="titulo-seccion">Iyosei</h2>
+        <div class="productos-grid">
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/ff6b6b/ffffff?text=Peluche" alt="Peluche Gigante">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Peluche Gigante</div>
+                    <div class="producto-precio">$35</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Peluche Gigante', 35, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/ff8787/ffffff?text=Rompecabezas" alt="Rompecabezas 1000 piezas">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Rompecabezas 1000 piezas</div>
+                    <div class="producto-precio">$25</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Rompecabezas 1000 piezas', 25, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/ffa8a8/ffffff?text=Robot" alt="Robot Interactivo">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Robot Interactivo</div>
+                    <div class="producto-precio">$89</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Robot Interactivo', 89, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/ff6b9d/ffffff?text=Coche" alt="Coche de Control">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Coche de Control</div>
+                    <div class="producto-precio">$45</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Coche de Control', 45, event)">Agregar al carrito</button>
+                </div>
+            </div>
+        </div>
+        <button class="volver-inicio" onclick="volverAlInicio()">Volver al Inicio</button>
+    </div>
+
+    <!-- ===== SECCIÓN LIBROS - Productos de lectura ===== -->
+    <div id="libros" class="productos-seccion">
+        <h2 class="titulo-seccion">Nov</h2>
+        <div class="productos-grid">
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/c44569/ffffff?text=Novela" alt="Best Seller Novela">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Best Seller Novela</div>
+                    <div class="producto-precio">$15</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Best Seller Novela', 15, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/667eea/ffffff?text=Recetas" alt="Libro de Recetas">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Libro de Recetas</div>
+                    <div class="producto-precio">$22</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Libro de Recetas', 22, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/764ba2/ffffff?text=Autoayuda" alt="Guía de Autoayuda">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Guía de Autoayuda</div>
+                    <div class="producto-precio">$18</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Guía de Autoayuda', 18, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/f093fb/ffffff?text=Infantil" alt="Cuento Infantil">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Cuento Infantil</div>
+                    <div class="producto-precio">$12</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Cuento Infantil', 12, event)">Agregar al carrito</button>
+                </div>
+            </div>
+        </div>
+        <button class="volver-inicio" onclick="volverAlInicio()">Volver al Inicio</button>
+    </div>
+
+    <!-- ===== SECCIÓN ALIMENTOS - Productos comestibles ===== -->
+    <div id="alimentos" class="productos-seccion">
+        <h2 class="titulo-seccion">Novalook</h2>
+        <div class="productos-grid">
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/f5576c/ffffff?text=Café" alt="Café Premium">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Café Premium</div>
+                    <div class="producto-precio">$12</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Café Premium', 12, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/ff9a9e/ffffff?text=Miel" alt="Miel Natural">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Miel Natural</div>
+                    <div class="producto-precio">$8</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Miel Natural', 8, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/fecfef/ffffff?text=Chocolate" alt="Chocolate Artesanal">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Chocolate Artesanal</div>
+                    <div class="producto-precio">$6</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Chocolate Artesanal', 6, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/667eea/ffffff?text=Vino" alt="Vino Premium">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Vino Premium</div>
+                    <div class="producto-precio">$25</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Vino Premium', 25, event)">Agregar al carrito</button>
+                </div>
+            </div>
+        </div>
+        <button class="volver-inicio" onclick="volverAlInicio()">Volver al Inicio</button>
+    </div>
+
+    <!-- ===== SECCIÓN JARDINERÍA - Productos para jardín ===== -->
+    <div id="jardineria" class="productos-seccion">
+        <h2 class="titulo-seccion">Victa</h2>
+        <div class="productos-grid">
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/764ba2/ffffff?text=Maceta" alt="Maceta Decorativa">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Maceta Decorativa</div>
+                    <div class="producto-precio">$15</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Maceta Decorativa', 15, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/f093fb/ffffff?text=Semillas" alt="Kit de Semillas">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Kit de Semillas</div>
+                    <div class="producto-precio">$10</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Kit de Semillas', 10, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/f5576c/ffffff?text=Herramientas" alt="Set de Herramientas">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Set de Herramientas</div>
+                    <div class="producto-precio">$32</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Set de Herramientas', 32, event)">Agregar al carrito</button>
+                </div>
+            </div>
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="https://via.placeholder.com/300x200/ffa8a8/ffffff?text=Regadera" alt="Regadera Decorativa">
+                </div>
+                <div class="producto-info">
+                    <div class="producto-nombre">Regadera Decorativa</div>
+                    <div class="producto-precio">$18</div>
+                    <button class="agregar-carrito" onclick="agregarAlCarrito('Regadera Decorativa', 18, event)">Agregar al carrito</button>
+                </div>
+            </div>
+        </div>
+        <button class="volver-inicio" onclick="volverAlInicio()">Volver al Inicio</button>
+    </div>
+
+
+    <!-- ===== CARRITO ===== -->
+    <button class="carrito-icono" id="carrito-icono" onclick="toggleCarrito()">🛒</button>
+    <div class="carrito-container" id="carrito-container">
+        <div class="carrito-header">
+            <div class="carrito-titulo">Carrito de Compras</div>
+            <div class="carrito-cantidad" id="cantidad-carrito">0</div>
+        </div>
+        <div id="items-carrito"></div>
+        <div class="carrito-total" id="carrito-total" style="display: none;">
+            <!-- AVISO DE DESCUENTO -->
+<div id="descuento-aviso" class="descuento-aviso" style="display: none;">
+    <div id="descuento-titulo"></div>
+    <div class="descuento-texto" id="descuento-texto"></div>
+</div>
+            <div class="total-texto">Total: $<span id="total-precio">0</span></div>
+            <button class="comprar-total" onclick="generarLinkCompra()">Comprar Total</button>
+            <div class="link-compra" id="link-compra" style="display: none;">
+                <div class="link-texto" id="link-texto"></div>
+                <button class="copiar-link" onclick="copiarLink()">Copiar Link</button>
+                <div class="instrucciones">Copia el link y compártelo por WhatsApp</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <div class="footer">
+        <div class="footer-content">
+            <h3>Coketa Tu Estilo - Tienda Online</h3>
+            <p>¡Gracias por visitarnos!</p>
+            <p>Encuentra los mejores productos de belleza y cuidado personal al mejor precio</p>
+            <p>📞 Contacto: +54 9 3834 98-8696</p>
+            <p>📧 Email: Diazzrosa517@gmail.com</p>
+            <a href="https://www.facebook.com/109943277381545/" target="_blank">Visitanos en facebook</a>
+        </div>
+    </div>
+
+    <!-- ===== BOTÓN FLOTANTE UBICACIÓN ===== -->
+<button class="ubicacion-btn" onclick="mostrarUbicacion()">Ubicación</button>
+
+<!-- ===== SECCIÓN UBICACIÓN ===== -->
+<div id="ubicacion" class="ubicacion-seccion">
+    <div class="ubicacion-container">
+        <h2 class="ubicacion-titulo">📍 Nuestra Ubicación</h2>
+        
+        <!-- MAPA -->
+        <div class="mapa-container">
+            <!-- Reemplaza el src con tu ubicación de Google Maps -->
+            <iframe 
+                class="mapa-iframe"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d260.6782836922639!2d-65.76957807421229!3d-28.471867753232317!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9424292f92a0180f%3A0x610e81a13915ce9b!2sCOKETA%20TU%20ESTILO%20cosmetica%20capilar!5e0!3m2!1ses!2sar!4v1776545502448!5m2!1ses!2sar" 
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+            <div class="mapa-direccion">
+                <strong>📍 Dirección:</strong>
+                Av. Alem 934, K4700CQH San Fernando del Valle de Catamarca, Catamarca, Argentina<br>
+                <small></small>
+            </div>
+        </div>
+        
+        <!-- HORARIOS -->
+        <div class="horarios-container">
+            <h3 class="horarios-titulo">Horarios de Atención</h3>
+            <div class="horarios-grid" id="horarios-grid">
+                <!-- Los horarios se generan con JavaScript -->
+            </div>
+        </div>
+        
+        <!-- INFO ADICIONAL -->
+        <div class="ubicacion-info">
+            <div class="info-card">
+                <div class="info-icono">📞</div>
+                <div class="info-titulo">Teléfono</div>
+                <div class="info-texto">+54 9 3834 98-8696</div>
+            </div>
+            <div class="info-card">
+                <div class="info-icono">📧</div>
+                <div class="info-titulo">Email</div>
+                <div class="info-texto">Diazzrosa517@gmail.com</div>
+            </div>
+        </div>
+        
+        <button class="volver-btn-ubicacion" onclick="volverAlInicio()">← Volver a la tienda</button>
+    </div>
+</div>
+
+    <script>
+        // ===== VARIABLES GLOBALES =====
+        let carrito = [];
+        let linkGenerado = '';
+        let carritoAbierto = false;
+        let todosLosProductos = [];
+
+        // ===== BASE DE DATOS DE PRODUCTOS =====
+        const productosPorCategoria = {
+            electronica: [
+                { nombre: 'botox capilar 250cc', precio: 5.326, imagen: 'vella_img/vella botox capilar 250cc.png' },
+                { nombre: 'botox matizador 250cc', precio: 5.326, imagen: 'vella_img/vella botox matizador 250cc.png' },
+                { nombre: 'levanta muerto 250cc', precio: 5.326, imagen: 'vella_img/vella levanta muerto 250cc.png' },
+                { nombre: 'thermo keratina 250cc', precio: 5.326, imagen: 'vella_img/vella thermo keratina 250cc.png' },
+                { nombre: 'keratina plastificado 250cc', precio: 5.326, imagen: 'vella_img/vella keratina plastificado 250cc.png' },
+                { nombre: 'rescate inmediato 250cc', precio:  5.326, imagen: 'vella_img/vella rescate inmediato 250cc.png' },
+                { nombre: 'lifting capilar 250cc', precio: 5.326, imagen: 'vella_img/vella lifting capilar 250cc.png' },
+                { nombre: 'gel plex modelador', precio: 5.660, imagen: 'vella_img/vella gel plex modelador.png' },
+                { nombre: 'oro liquido', precio: 5.326, imagen: 'vella_img/vella oro liquido.png' },
+                { nombre: 'plastidicado sellador', precio: 5.326, imagen: 'vella_img/vella plastidicado sellador.png' },
+                { nombre: 'heat 365 protector', precio: 5.451, imagen: 'vella_img/vella heat 365 protector.png' },
+                { nombre: 'keratina hidroalizada', precio: 5.326, imagen: 'vella_img/vella keratina hidroalizada.png' },
+                { nombre: 'va-plex', precio: 5.228, imagen: 'vella_img/vella va-plex.png' },
+                { nombre: '5 en 1 spray para peinar', precio: 6.218, imagen: 'vella_img/vella 5 en 1 spray para peinar.png' },
+                { nombre: 'crema de peinar biocauterizador', precio: 7.799, imagen: 'vella_img/vella crema de peinar biocauterizador.png' },
+                { nombre: 'biotina tratamiento capilar', precio: 5.590, imagen: 'vella_img/vella biotina tratamiento capilar.png' },
+                { nombre: 'hidro nutricion', precio: 5.521, imagen: 'vella_img/vella hidro nutricion.png' },
+                { nombre: 'extra nutricion', precio: 3.973, imagen: 'vella_img/vella extra nutricion.png' },
+                { nombre: 'matizador violeta', precio: 5.116, imagen: 'vella_img/vella matizador violeta.png' },
+                { nombre: 'matizador black', precio: 5.116, imagen: 'vella_img/vella matizador black.png' },
+                { nombre: 'matizador rojo', precio: 5.116, imagen: 'vella_img/vella matizador rojo.png' },
+                { nombre: 'shampoo matizador violeta', precio: 7.765, imagen: 'vella_img/vella shampoo matizador violeta.png' },
+                { nombre: 'shampoo matizador black', precio: 8.198, imagen: 'vella_img/vella shampoo matizador black.png' },
+                { nombre: 'shampoo matizador rojo', precio: 7.765, imagen: 'vella_img/vella shampoo matizador rojo.png' },
+                { nombre: 'baño de crema 250g', precio: 4.308, imagen: 'vella_img/vella baño de crema btx extreme 250g.png' },
+                { nombre: 'baño de crema btx extreme 1000g', precio: 11.851, imagen: 'vella_img/vella baño de crema btx extreme 1000g.png' },
+                { nombre: 'baño de crema keratina 250g', precio: 4.308, imagen: 'vella_img/vella baño de crema keratina 250g.png' },
+                { nombre: 'baño de crema keratina 1000g', precio: 11.851, imagen: 'vella_img/vella baño de crema keratina 1000g.png' },
+                { nombre: 'baño de crema ph extra acido 250g', precio: 4.308, imagen: 'vella_img/vella baño de crema ph extra acido 250g.png' },
+                { nombre: 'baño de crema ph extra acido 1000g', precio: 11.851, imagen: 'vella_img/vella baño de crema ph extra acido 1000g.png' },
+                { nombre: 'baño de crema argan 1000g', precio: 12.450, imagen: 'vella_img/vella baño de crema argan 1000g.png' },
+                { nombre: 'shampoo neutro', precio: 4.754, imagen: 'vella_img/vella shampoo neutro.png' },
+                { nombre: 'shampoo botox', precio: 5.716, imagen: 'vella_img/vella shampoo botox.png' },
+                { nombre: 'acondicionador botox', precio: 5.716, imagen: 'vella_img/vella acondicionador botox.png' },
+                { nombre: 'shampoo ortiga', precio: 5.144, imagen: 'vella_img/vella shampoo ortiga.png' },
+                { nombre: 'acondicionador ortiga', precio: 5.144, imagen: 'vella_img/vella acondicionador ortiga.png' },
+                { nombre: 'acondicionador keratina', precio: 5.144, imagen: 'vella_img/vella acondicionador keratina.png' },
+                { nombre: 'lifting capilar', precio: 7.612, imagen: 'vella_img/vella lifting capilar.png' },
+                { nombre: 'serum argan', precio: 6.525, imagen: 'vella_img/vella serum argan.png' },
+                { nombre: 'serum cristal', precio: 6.525, imagen: 'vella_img/vella serum cristal.png' },
+                { nombre: 'serum coco argan', precio: 4.461, imagen: 'vella_img/vella serum coco argan.png' },
+                { nombre: 'serum semi di lino', precio: 4.461, imagen: 'vella_img/vella serum semi di lino.png' },
+                { nombre: 'brillo final', precio: 8.701, imagen: 'vella_img/vella brillo final.png' },
+                { nombre: 'aceite de almendras', precio: 5.326, imagen: 'vella_img/vella aceite de almendras.png' },
+                { nombre: 'vella aceite de coco', precio: 5.326, imagen: 'vella_img/vella aceite de coco.png' },
+                { nombre: 'vella aceite de ricino', precio: 5.326, imagen: 'vella_img/vella aceite de ricino.png' },
+                { nombre: 'ampollas capilares ortiga', precio: 2.663, imagen: 'vella_img/vella ampollas capilares ortiga.png' },
+                { nombre: 'vella ampollas capilares silver', precio: 2.663, imagen: 'vella_img/vella ampollas capilares silver.png' },
+                { nombre: 'vella ampollas capilares cereza', precio: 2.663, imagen: 'vella_img/vella ampollas capilares cereza.png' },
+                { nombre: 'vella ampollas capilares coco', precio: 2.663, imagen: 'vella_img/vella ampollas capilares coco.png' },
+            ],
+            ropa: [
+                { nombre: 'Shampoo Argan', precio: 4.774, imagen: 'bekim_img/bekim-shampoo-argan.png' },
+                { nombre: 'Crema De Peinar Argan', precio: 4.381, imagen: 'bekim_img/crema-de-peinar-argan.png' },
+                { nombre: 'Mascara Argan', precio: 6.141, imagen: 'bekim_img/mascara-argan-bekin.png' },
+                { nombre: 'BB Cream Argan', precio: 14.888, imagen: 'bekim_img/BB CREAM-argan-bekim.png' },
+                { nombre: 'Ampolla Argan', precio: 26.758, imagen: 'bekim_img/ampolla-bekim-argan.png' },
+                { nombre: 'Serum Argan', precio: 13.871, imagen: 'bekim_img/serum-bekim-argan.png' },
+                { nombre: 'Shampoo Memory', precio: 5.824, imagen: 'bekim_img/SHAMPOO-bekim-memory.png' },
+                { nombre: 'Acondicionador Memory', precio: 5.476, imagen: 'bekim_img/ACONDICIONADOR-bekim-memory.png' },
+                { nombre: 'Crema De Peinar Memory', precio: 5.546, imagen: 'bekim_img/crema-de-peinar-bekim-memory.png' },
+                { nombre: 'Mascara Memory', precio: 7.042, imagen: 'bekim_img/MÁSCARA-bekim-memory.png' },
+                { nombre: 'Shampoo Karite', precio: 3.753, imagen: 'bekim_img/SHAMPOO-karite-bekim.png' },
+                { nombre: 'Crema De Peinar Karite', precio: 4.955, imagen: 'bekim_img/CREMA DE PEINAR-karite-bekim.png' },
+                { nombre: 'Mascara Karite', precio: 6.002, imagen: 'bekim_img/MÁSCARA-karite-bekim.png' },
+                { nombre: 'BB Crema Karite', precio: 11.463, imagen: 'bekim_img/BB CREAM-karite-bekim.png' },
+                { nombre: 'Ampolla Karite', precio: 23.392, imagen: 'bekim_img/AMPOLLAS-karite-bekim.png' },
+                { nombre: 'Serum Karite', precio: 13.871, imagen: 'bekim_img/SERUM-karite-bekim.png' },
+                { nombre: 'Shampoo After Color', precio: 4.064, imagen: 'bekim_img/SHAMPOO-after-color-bekim.png' },
+                { nombre: 'Crema De Peinar After Color', precio: 4.022, imagen: 'bekim_img/CREMA DE PEINAR-after-color-bekim.png' },
+                { nombre: 'Ampollas After Color', precio: 18.256, imagen: 'bekim_img/AMPOLLAS-after-color-bekim.png' },
+                { nombre: 'Mascara After Color', precio: 4.817, imagen: 'bekim_img/MÁSCARA-after-color-bekim.png' },
+                { nombre: 'Shampoo Violet Happy Blond', precio: 8.861, imagen: 'bekim_img/SHAMPOO VIOLET-happy-bekim.png' },
+                { nombre: 'Mascara Violet Happy Blond', precio: 7.937, imagen: 'bekim_img/MÁSCARA VIOLET-happy-bekim.png' },
+                { nombre: 'Shampoo Blue Happy Blond', precio: 8.861, imagen: 'bekim_img/SHAMPOO BLUE-happy-bekim.png' },
+                { nombre: 'Mascara Blue Happy Blond', precio: 7.937, imagen: 'bekim_img/MÁSCARA BLUE-happy-bekim.png' },
+                { nombre: 'Shampoo equilibrid', precio: 5.044, imagen: 'bekim_img/SHAMPOO-equilibrid-bekim.png' },
+                { nombre: 'Tintura En Crema Color', precio: 4.592, imagen: 'bekim_img/TINTURA EN CREMA-tintura-color-bekim.png' },
+                { nombre: 'Crema Oxidante Volumen 10', precio: 12.209, imagen: 'bekim_img/CREMA OXIDANTE-vol-10-bekim.png' },
+                { nombre: 'Crema Oxidante Volumen 20', precio: 12.209, imagen: 'bekim_img/CREMA OXIDANTE-vol-20-bekim.png' },
+                { nombre: 'Crema Oxidante Volumen 30', precio: 12.459, imagen: 'bekim_img/CREMA OXIDANTE-vol-30-bekim.png' },
+                { nombre: 'Crema Oxidante Volumen 40', precio: 12.459, imagen: 'bekim_img/CREMA OXIDANTE-vol-40-bekim.png' },
+                { nombre: 'GEL 250 Suprem Fixer', precio: 6.172, imagen: 'bekim_img/GEL250-supreme-fixer-bekim.png' },
+                { nombre: 'GEL Suprem Fixer', precio: 17.636, imagen: 'bekim_img/gel-supreme-fixer-bekim.png' },
+                { nombre: 'Polvo Decolorante Genesis', precio: 20.806, imagen: 'bekim_img/POLVO DECOLORANTE-genesis-bekim.png' },
+                { nombre: 'brazilian keratina ampolla alizante', precio: 24.502, imagen: 'bekim_img/bekim brazilian keratina ampolla alizante.png' },
+                { nombre: 'brazilian keratin mascara de hidratacion 2 en 1', precio: 25.502, imagen: 'bekim_img/bekim brazilian keratin mascara de hidratacion 2 en 1.png' },
+                { nombre: 'brazilian keratin maca preto colageno', precio: 35.802, imagen: 'bekim_img/bekim brazilian keratin maca preto colageno.png' },
+                { nombre: 'brazilian keratin argan liso perfecto', precio: 15.802, imagen: 'bekim_img/bekim brazilian keratin argan liso perfecto.png' },
+                { nombre: 'brazilian keratin complex keratina', precio: 14.502, imagen: 'bekim_img/bekim brazilian keratin complex keratina.png' },
+                { nombre: 'brazilian keratin bottox smart', precio: 14.502, imagen: 'bekim_img/bekim brazilian keratin bottox smart.png' },
+                { nombre: 'brazilian keratin plastificado capilar', precio: 15.502, imagen: 'bekim_img/bekim brazilian keratin plastificado capilar.png' },
+                { nombre: 'brazilian keratin complex keratina 250g', precio: 6.888, imagen: 'bekim_img/bekim brazilian keratin complex keratina 250g.png' },
+                { nombre: 'brazilian keratin lixplex 250g', precio: 12.421, imagen: 'bekim_img/bekim brazilian keratin lixplex 250g.png' },
+                { nombre: 'brazilian keratin argan liss 250g', precio: 7.853, imagen: 'bekim_img/bekim brazilian keratin argan liss 250g.png' },
+                { nombre: 'brazilian keratin shampoo ph neutro 250g', precio: 5.326, imagen: 'bekim_img/bekim brazilian keratin shampoo ph neutro 250g.png' },
+                { nombre: 'brazilian keratin plastified hair 250g', precio: 6.888, imagen: 'bekim_img/bekim brazilian keratin plastified hair 250g.png' },
+                { nombre: 'brazilian keratin cacao premium 250g', precio: 9.126, imagen: 'bekim_img/bekim brazilian keratin cacao premium 250g.png' },
+                { nombre: 'brazilian keratin blond botox smart 250g', precio: 6.888, imagen: 'bekim_img/bekim brazilian keratin blond botox smart 250g.png' },
+                { nombre: 'brazilian mascara chocolate dubai', precio: 11.136, imagen: 'bekim_img/bekim brazilian mascara chocolate dubai.png' },
+                { nombre: 'brazilian amino fusion', precio: 9.759, imagen: 'bekim_img/bekim brazilian amino fusion.png' },
+                { nombre: 'brazilian proteccion termica cherry', precio: 11.534, imagen: 'bekim_img/bekim brazilian proteccion termica cherry.png' },
+            ],
+            hogar: [
+                { nombre: 'frutastica uva shampoo', precio: 7.499, imagen: 'skala_img/skala frutastica uva shampoo.png' },
+                { nombre: 'frutastica uva acondicionador', precio: 7.499, imagen: 'skala_img/skala frutastica uva acondicionador.png' },
+                { nombre: 'frutastica brilho extremo uva', precio: 7.799, imagen: 'skala_img/skala frutastica brilho extremo uva.png' },
+                { nombre: 'frutastica shampoo e acondicionador uva', precio: 14.499, imagen: 'skala_img/skala frutastica shampoo e acondicionador uva.png' },
+                { nombre: 'frutastica melancia shampoo', precio: 7.499, imagen: 'skala_img/skala frutastica melancia shampoo.png' },
+                { nombre: 'frutastica melancia acondicionador', precio: 7.499, imagen: 'skala_img/skala frutastica melancia acondicionador.png' },
+                { nombre: 'frutastica melancia ultra definicao', precio: 7.799, imagen: 'skala_img/skala frutastica melancia ultra definicao.png' },
+                { nombre: 'frutastica melancia shampoo e acondicionador', precio: 14.499, imagen: 'skala_img/skala frutastica melancia shampoo e acondicionador.png' },
+                { nombre: 'frutastica morango shampoo', precio: 7.499, imagen: 'skala_img/skala frutastica morango shampoo.png' },
+                { nombre: 'frutastica morango acondicionador', precio: 7.499, imagen: 'skala_img/skala frutastica morango acondicionador.png' },
+                { nombre: 'frutastica morango nutricao e brilho', precio: 7.799, imagen: 'skala_img/skala frutastica morango nutricao e brilho.png' },
+                { nombre: 'frutastica morango shampoo e acondicionador', precio: 14.499, imagen: 'skala_img/skala frutastica morango shampoo e acondicionador.png' },
+                { nombre: 'frutastica coco shampoo', precio: 7.499, imagen: 'skala_img/skala frutastica coco shampoo.png' },
+                { nombre: 'frutastica coco acondicionador', precio: 7.499, imagen: 'skala_img/skala frutastica coco acondicionador.png' },
+                { nombre: 'frutastica coco nutricao poderosa', precio: 7.799, imagen: 'skala_img/skala frutastica coco nutricao poderosa.png' },
+                { nombre: 'frutastica coco shampoo e acondicionador', precio: 14.499, imagen: 'skala_img/skala frutastica coco shampoo e acondicionador.png' },
+                { nombre: 'frutastica banana shampoo', precio: 7.499, imagen: 'skala_img/skala frutastica banana shampoo.png' },
+                { nombre: 'frutastica banana acondicionador', precio: 7.499, imagen: 'skala_img/skala frutastica banana acondicionador.png' },
+                { nombre: 'frutastica banana reparacao surpreendente', precio: 7.799, imagen: 'skala_img/skala frutastica banana reparacao surpreendente.png' },
+                { nombre: 'frutastica banana shampoo e acondicionador', precio: 14.499, imagen: 'skala_img/skala frutastica banana shampoo e acondicionador.png' }
+
+            ],
+            deportes: [
+                { nombre: 'Difusor universal Eurostil, colores', precio: 0, imagen: 'eurostil_img/Difusor universal Eurostil, colores.png', disponible: false }, // ❌ Agotado,
+                { nombre: 'Plancha profesional IONIC', precio: 0, imagen: 'eurostil_img/eurostil Plancha profesional IONIC.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Secador NEO 3800', precio: 0, imagen: 'eurostil_img/eurostil Secador NEO 3800.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Secador NEO 3830', precio: 0, imagen: 'eurostil_img/eurostil Secador NEO 3830.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Máquinas corta cabello K-3600', precio: 0, imagen: 'eurostil_img/eurostil Máquinas corta cabello K-3600.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Máquinas corta cabello K-3700', precio: 0, imagen: 'eurostil_img/eurostil Máquinas corta cabello K-3700.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Cepillos térmicos púa nylon', precio: 0, imagen: 'eurostil_img/eurostil Cepillos térmicos púa nylon.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Cepillos térmicos cerámicos', precio: 0, imagen: 'eurostil_img/eurostil Cepillos térmicos cerámicos.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Cepillo plástico mango cuadrado nylon', precio: 0, imagen: 'eurostil_img/eurostil Cepillo plástico mango cuadrado nylon.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Cepillo rulo plástico', precio: 0, imagen: 'eurostil_img/eurostil Cepillo rulo plástico.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Cepillo crepar plano mezcla', precio: 0, imagen: 'eurostil_img/eurostil Cepillo crepar plano mezcla.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Cepillo goma fuelle nylon', precio: 0, imagen: 'eurostil_img/eurostil Cepillo goma fuelle nylon.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Cepillo neumático pua plástico', precio: 0, imagen: 'eurostil_img/eurostil Cepillo neumático pua plástico.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Cepillo esqueleto ovalado mezcla jabalí', precio: 0, imagen: 'eurostil_img/eurostil Cepillo esqueleto ovalado mezcla jabalí.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Cepillo neumático púa plástico pequeño', precio: 0, imagen: 'eurostil_img/eurostil Cepillo neumático púa plástico pequeño.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Cepillo neumático mango goma pua plástico pequeño', precio: 0, imagen: 'eurostil_img/eurostil Cepillo neumático mango goma pua plástico pequeño.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'eurostil Cepillo rectangular, púa plástico, mango circular', precio: 0, imagen: 'eurostil_img/eurostil Cepillo rectangular, púa plástico, mango circular.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Cepillo neumático púa plástico, mango circular', precio: 0, imagen: 'eurostil_img/eurostil Cepillo neumático púa plástico, mango circular.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Cepillo flexible fingers brush para rulos', precio: 0, imagen: 'eurostil_img/eurostil Cepillo flexible fingers brush para rulos.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Cepillo desenredar surtido bicolor', precio: 0, imagen: 'eurostil_img/eurostil Cepillo desenredar surtido bicolor.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Cepillo para champú masajeador', precio: 0, imagen: 'eurostil_img/Cepillo para champú masajeador.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Cepillo araña mango antideslizante, Colores', precio: 0, imagen: 'eurostil_img/eurostil Cepillo araña mango antideslizante, Colores.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Cepillo esqueleto grande nylon 1 púa', precio: 0, imagen: 'eurostil_img/eurostil Cepillo esqueleto grande nylon 1 púa.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Cepillos BABY', precio: 0, imagen: 'eurostil_img/eurostil Cepillos BABY.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Peine batidor nylon corte', precio: 0, imagen: 'eurostil_img/eurostil Peine batidor nylon corte.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Peine nylon púa hierro', precio: 0, imagen: 'eurostil_img/eurostil Peine nylon púa hierro.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Peine ahuecador curvado', precio: 0, imagen: 'eurostil_img/Peine ahuecador curvado.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Peine escarpidor púa ancha', precio: 0, imagen: 'eurostil_img/eurostil Peine escarpidor púa ancha.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Peine escarpidor púa doble grande', precio: 0, imagen: 'eurostil_img/eurostil Peine escarpidor púa doble grande.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Peine ahuecador mediano', precio: 0, imagen: 'eurostil_img/eurostil Peine ahuecador mediano.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Peine ahuecador pequeño', precio: 0, imagen: 'eurostil_img/eurostil Peine ahuecador pequeño.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Cepillo ahuecador profesional', precio: 0, imagen: 'eurostil_img/eurostil Cepillo ahuecador profesional.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Estuche cierre cristal', precio: 0, imagen: 'eurostil_img/eurostil Estuche cierre cristal.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Estuche peines', precio: 0, imagen: 'eurostil_img/eurostil Estuche peines.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Bote 60 peines púa hierro colores', precio: 0, imagen: 'eurostil_img/eurostil Bote 60 peines púa hierro colores.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Bote 60 peines batidor colores', precio: 0, imagen: 'eurostil_img/eurostil Bote 60 peines batidor colores.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Delantal trabajo cuerina', precio: 0, imagen: 'eurostil_img/Delantal trabajo cuerina.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Capa nylon', precio: 0, imagen: 'eurostil_img/Capa nylon.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Bol graduado con asa y goma antideslizante', precio: 0, imagen: 'eurostil_img/Bol graduado con asa y goma antideslizante.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Pincel de tintura grande', precio: 0, imagen: 'eurostil_img/Pincel de tintura grande.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Rollo papel aluminio', precio: 0, imagen: 'eurostil_img/Rollo papel aluminio.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Cuchara especial dosificadora', precio: 0, imagen: 'eurostil_img/Cuchara especial dosificadora.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Caja 80 tiras papel especial mechas', precio: 0, imagen: 'eurostil_img/Caja 80 tiras papel especial mechas.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Caja 80 tiras especial mechas aluminizadas 300x110 mm', precio: 0, imagen: 'eurostil_img/Caja 80 tiras especial mechas aluminizadas 300x110 mm.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Paleta mechas', precio: 0, imagen: 'eurostil_img/Paleta mechas.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Paletina especial mechas', precio: 0, imagen: 'eurostil_img/Paletina especial mechas.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Gorro goma para mechas', precio: 0, imagen: 'eurostil_img/Gorro goma para mechas.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Gorro silicona', precio: 0, imagen: 'eurostil_img/Gorro silicona.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Bolsa 12 gorros para mechas de látex, standard', precio: 0, imagen: 'eurostil_img/Bolsa 12 gorros para mechas de látex, standard.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Caja 1000 hojas papel Pollié', precio: 0, imagen: 'eurostil_img/Caja 1000 hojas papel Pollié.jpg', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Dispensador 20 libritos x 200 hojas papel permanente', precio: 0, imagen: 'eurostil_img/Dispensador 20 libritos x 200 hojas papel permanente.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Caja 100 guantes látex blancos con poco polvo', precio: 0, imagen: 'eurostil_img/Caja 100 guantes látex blancos con poco polvo.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Caja 100 guantes vinilo con poco polvo', precio: 0, imagen: 'eurostil_img/Caja 100 guantes vinilo con poco polvo.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Caja 20 guantes nitrilo negros, sin polvo', precio: 0, imagen: 'eurostil_img/Caja 20 guantes nitrilo negros, sin polvo.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Bolsa 120 pinzas pequeñas', precio: 0, imagen: 'eurostil_img/Bolsa 120 pinzas pequeñas.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Hebilla pequeña colores', precio: 0, imagen: 'eurostil_img/Hebilla pequeña colores.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Broches separadores plástico', precio: 0, imagen: 'eurostil_img/Broches separadores plástico.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Tijeras WAVES acero especial', precio: 0, imagen: 'eurostil_img/Tijeras WAVES acero especial.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Tijeras WAVES acero especial 5,75', precio: 0, imagen: 'eurostil_img/Tijeras WAVES acero especial 5,75.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'TIjeras EVOLUTE LINE', precio: 0, imagen: 'eurostil_img/TIjeras EVOLUTE LINE.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Tijera profesional mango plástico', precio: 0, imagen: 'eurostil_img/Tijera profesional mango plástico.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Lavacabezas portátil', precio: 0, imagen: 'eurostil_img/Lavacabezas portátil.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Relleno moño circular', precio: 0, imagen: 'eurostil_img/Relleno moño circular.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Paquete 5 rollos papel cuello', precio: 0, imagen: 'eurostil_img/Paquete 5 rollos papel cuello.png', disponible: false } // ❌ Agotado,
+            ],
+            belleza: [
+                { nombre: 'baño de crema nutritivo', precio: 11.799, imagen: 'gianna-b_img/gianna-b baño de crema nutritivo.png' },
+                { nombre: 'baño de crema post color', precio: 11.799, imagen: 'gianna-b_img/gianna-b baño de crema post color.png' },
+                { nombre: 'hidrobotox', precio: 7.799, imagen: 'gianna-b_img/gianna-b hidrobotox.png' },
+                { nombre: 'mascara capilar argan y macadamia', precio: 7.799, imagen: 'gianna-b_img/gianna-b mascara capilar argan y macadamia.png' },
+                { nombre: 'mascara capilar oleo de argan', precio: 11.799, imagen: 'gianna-b_img/gianna-b mascara capilar oleo de argan.png' },
+                { nombre: 'gianna-b mascara capilar reparadora', precio: 7.799, imagen: 'gianna-b_img/gianna-b mascara capilar reparadora.png' },
+                { nombre: 'mascara capilar ultrabrillo', precio: 11.799, imagen: 'gianna-b_img/gianna-b mascara capilar ultrabrillo.png' },
+                { nombre: '7 efectos', precio: 9.122, imagen: 'gianna-b_img/gianna-b 7 efectos.png' },
+                { nombre: 'acondicionador capilar', precio: 8.499, imagen: 'gianna-b_img/gianna-b acondicionador capilar.png' },
+                { nombre: 'gel capilar blue', precio: 12.299, imagen: 'gianna-b_img/gianna-b gel capilar blue.png' },
+                { nombre: 'gel capilar efecto humedo', precio: 7.799, imagen: 'gianna-b_img/gianna-b gel capilar efecto humedo.png' },
+                { nombre: 'gel capilar fijacion fuerte', precio: 7.799, imagen: 'gianna-b_img/gianna-b gel capilar fijacion fuerte.png' },
+                { nombre: 'gel capilar', precio: 12.299, imagen: 'gianna-b_img/gianna-b gel capilar.png' },
+                { nombre: 'mascara matizadora silver', precio: 15.999, imagen: 'gianna-b_img/gianna-b mascara matizadora silver.png' },
+                { nombre: 'reparador capilar', precio: 8.094, imagen: 'gianna-b_img/gianna-b reparador capilar.png' },
+                { nombre: 'gianna-b shampoo', precio: 8.499, imagen: 'gianna-b_img/gianna-b shampoo.png' },
+                { nombre: 'gianna-b super set', precio: 8.499, imagen: 'gianna-b_img/gianna-b super set.png' },
+                
+            ],
+            juguetes: [
+                { nombre: 'cera modelante styling', precio: 7.799, imagen: 'iyosei_img/cera modelante styling iyosei.png' },
+                { nombre: 'voluminizador styling', precio: 6.475, imagen: 'iyosei_img/voluminizador styling iyosei.png' },
+                { nombre: 'serum styling', precio: 8.662, imagen: 'iyosei_img/serum styling iyosei.png' },
+                { nombre: 'crema thermo alisante styling', precio: 8.924, imagen: 'iyosei_img/crema thermo alisante styling iyosei.png' },
+                { nombre: 'seda capilar milagrosa styling', precio: 6.523, imagen: 'iyosei_img/seda capilar milagrosa styling iyosei.png' },
+                { nombre: 'reparador de puntas styling', precio: 7.799, imagen: 'iyosei_img/reparador de puntas styling iyosei.png' },
+                { nombre: 'shampoo argan maroccon', precio: 6.799,imagen: 'iyosei_img/shampoo argan maroccon iyosei.png' },
+                { nombre: 'mascara argan moroccan', precio: 6.799, imagen: 'iyosei_img/mascara argan moroccan iyosei.png' },
+                { nombre: 'oleo argan moroccon', precio: 11.799, imagen: 'iyosei_img/oleo argan moroccon iyosei.png' },
+                { nombre: 'shock argan moroccon p/u', precio: 2.499, imagen: 'iyosei_img/shock argan moroccon iyosei.png' },
+                { nombre: 'shampoo anti-caidas moroccon', precio: 5.799, imagen: 'iyosei_img/shampoo anti-caidas moroccon iyosei.png' },
+                { nombre: 'pomada barba y bigote', precio: 5.799, imagen: 'iyosei_img/pomada barba y bigote iyosei.png' },
+                { nombre: 'oleo barba y bigote', precio: 6.799, imagen: 'iyosei_img/oleo barba y bigote iyosei.png' },
+                { nombre: 'after shave barberia', precio: 5.799, imagen: 'iyosei_img/after shave barberia iyosei.png' },
+                { nombre: 'gel de afeitar barberia', precio: 5.799, imagen: 'iyosei_img/gel de afeitar barberia iyosei.png' },
+                { nombre: 'styling cera suave', precio: 5.999, imagen: 'iyosei_img/iyosei styling cera suave.png' },
+                { nombre: 'styling gel humedo', precio: 5.799, imagen: 'iyosei_img/iyosei styling gel humedo.png' },
+                { nombre: 'styling fibra modeladora', precio: 9.499, imagen: 'iyosei_img/iyosei styling fibra modeladora.png' },
+                { nombre: 'styling crema rizos', precio: 7.799, imagen: 'iyosei_img/iyosei styling crema rizos.png' },
+                { nombre: 'styling spray para peinar', precio: 7.799, imagen: 'iyosei_img/iyosei styling spray para peinar.png' },
+                { nombre: 'mascara reparadora', precio: 0, imagen: 'iyosei_img/iyosei mascara reparadora.png' },
+                { nombre: 'mascara anti-frizz', precio: 0, imagen: 'iyosei_img/iyosei mascara anti-frizz.png' },
+                { nombre: 'mascara nutricion', precio: 0, imagen: 'iyosei_img/iyosei mascara nutricion.png' },
+                { nombre: 'mascara hidratacion', precio: 0, imagen: 'iyosei_img/iyosei mascara hidratacion.png' },
+                { nombre: 'shock keratina p/u', precio: 2.499, imagen: 'iyosei_img/iyosei shock keratina.png' },
+                { nombre: 'perlas keratina x6', precio: 2.499, imagen: 'iyosei_img/iyosei perlas keratina.png' },
+                { nombre: 'perlas colageno x6', precio: 2.499, imagen: 'iyosei_img/iyosei perlas colageno.png' },
+                { nombre: 'perlas arginina x6', precio: 2.499, imagen: 'iyosei_img/iyosei perlas arginina.png' },
+                { nombre: 'therapy+ shampoo reestructurante 230g', precio: 5.799, imagen: 'iyosei_img/iyosei therapy+ shampoo reestructurante 230g.png' },
+                { nombre: 'therapy+ shampoo reestructurante 1500ml', precio: 7.799, imagen: 'iyosei_img/iyosei therapy+ shampoo reestructurante 1500ml.png' },
+                { nombre: 'therapy+ acondicionador reestructurante 230g', precio: 5.799, imagen: 'iyosei_img/iyosei therapy+ acondicionador reestructurante 230g.png' },
+                { nombre: 'therapy+ acondicionador reestructurante 1500ml', precio: 7.799, imagen: 'iyosei_img/iyosei therapy+ acondicionador reestructurante 1500ml.png' },
+                { nombre: 'therapy+ mascara 230g', precio: 5.799, imagen: 'iyosei_img/iyosei therapy+ mascara 230g.png' },
+                { nombre: 'therapy+ mascara 1000g', precio: 18.799, imagen: 'iyosei_img/iyosei therapy+ mascara 1000g.png' },
+                { nombre: 'luxury iplex n°1 technology p/u', precio: 2.499, imagen: 'iyosei_img/iyosei luxury iplex n°1 technology.png' },
+                { nombre: 'luxury shampoo violet', precio: 6.799, imagen: 'iyosei_img/iyosei luxury shampoo violet.png' },
+                { nombre: 'luxury mascara violet', precio: 6.799, imagen: 'iyosei_img/iyosei luxury mascara violet.png' },
+                { nombre: 'luxury super acondicionador', precio: 6.799, imagen: 'iyosei_img/iyosei luxury super acondicionador.png' },
+                { nombre: 'luxury 10 en 1 tratamiento', precio: 6.799, imagen: 'iyosei_img/iyosei luxury 10 en 1 tratamiento.png' },
+                { nombre: 'luxury shampoo acido 230g', precio: 6.799, imagen: 'iyosei_img/iyosei luxury shampoo acido 230g.png' },
+                { nombre: 'luxury shampoo acido 1500ml', precio: 0, imagen: 'iyosei_img/iyosei luxury shampoo acido 1500ml.png' },
+                { nombre: 'luxury shampoo color', precio: 6.799, imagen: 'iyosei_img/iyosei luxury shampoo color.png' },
+                { nombre: 'luxury polvo decolorante blanco', precio: 21.899, imagen: 'iyosei_img/iyosei luxury polvo decolorante blanco.png' },
+                { nombre: 'luxury polvo decolorante azul', precio: 16.899, imagen: 'iyosei_img/iyosei luxury polvo decolorante azul.png' },
+                { nombre: 'luxury mascara extra acida 1000g', precio: 0, imagen: 'iyosei_img/iyosei luxury mascara extra acida 1000g.png' },
+                { nombre: 'luxury mascara reestructurante', precio: 6.799, imagen: 'iyosei_img/iyosei luxury mascara reestructurante.png' },
+                { nombre: 'luxury mascara reestructurante 1000g', precio: 18.799, imagen: 'iyosei_img/iyosei luxury mascara reestructurante 1000g.png' }
+
+            ],
+            libros: [
+                { nombre: 'bioplex crema multi-x 125g', precio: 4.299, imagen: 'nov_img/nov bioplex crema multi-x.png' },
+                { nombre: 'bioplex shampoo 250ml', precio: 4.336, imagen: 'nov_img/nov bioplex shampoo 250ml.png' },
+                { nombre: 'bioplex shampoo 1900ml', precio: 11.799, imagen: 'nov_img/nov bioplex shampoo 1900ml.png' },
+                { nombre: 'bioplex balsam 250ml', precio: 4.336, imagen: 'nov_img/nov bioplex balsam 250ml.png' },
+                { nombre: 'bioplex balsam 1900ml', precio: 11.799, imagen: 'nov_img/nov bioplex balsam 1900ml.png' },
+                { nombre: 'bioplex nutricion 220g', precio: 4.336, imagen: 'nov_img/nov bioplex nutricion 220g.png' },
+                { nombre: 'bioplex nutricion 980g', precio: 11.799, imagen: 'nov_img/nov bioplex nutricion 980g.png' },
+                { nombre: 'bioplex plex 15 uni.', precio: 18.499, imagen: 'nov_img/nov bioplex plex 15 uni.png' },
+                { nombre: 'ALMENDRA Balsam Bidon1900', precio: 11.799, imagen: 'nov_img/ALMENDRA_Balsam_Bidon1900.png' },
+                { nombre: 'ALMENDRA Nutricion CajaSobres', precio: 18.499, imagen: 'nov_img/ALMENDRA_Nutricion_CajaSobres.png' },
+                { nombre: 'ALMENDRA Nutricion Sobre20g', precio: 799, imagen: 'nov_img/ALMENDRA_Nutricion_Sobre20g.png' },
+                { nombre: 'ALMENDRA Balsam 250', precio: 4.299, imagen: 'nov_img/ALMENDRA-Balsam_250_REV01.png' },
+                { nombre: 'ALMENDRA Balsam 3900', precio: 11.799, imagen: 'nov_img/ALMENDRA-Balsam_3900.png' },
+                { nombre: 'ALMENDRA Nutricion 220', precio: 4.299, imagen: 'nov_img/ALMENDRA-Nutricion_220.png' },
+                { nombre: 'ALMENDRA Nutricion 980', precio: 11.799, imagen: 'nov_img/ALMENDRA-Nutricion_980.png' },
+                { nombre: 'ALMENDRA Shampoo 250', precio: 4.299, imagen: 'nov_img/ALMENDRA-Shampoo_250.png' },
+                { nombre: 'ALMENDRA Shampoo 3900', precio: 19.999, imagen: 'nov_img/ALMENDRA-Shampoo_3900.png' },
+                { nombre: 'ALMENDRA Shampoo Bidon1900', precio: 11.799, imagen: 'nov_img/ALMENDRA-Shampoo_Bidon1900.png' },
+                { nombre: 'BHC_Acondicionador_240', precio: 4.299, imagen: 'nov_img/BHC_Acondicionador_240.png' },
+                { nombre: 'BHC_Acondicionador_1900', precio: 11.799, imagen: 'nov_img/BHC_Acondicionador_1900.png' },
+                { nombre: 'BHC CREA-LIFT_CajaSobre', precio: 18.799, imagen: 'nov_img/BHC_CREA-LIFT_CajaSobre.png' },
+                { nombre: 'BHC CREA-LIFT_Sobre', precio: 799, imagen: 'nov_img/BHC_CREA-LIFT_Sobre.png' },
+                { nombre: 'BHC Family', precio: 29.999, imagen: 'nov_img/BHC_Family.png' },
+                { nombre: 'BHC FUSSION_Caja', precio: 18.799, imagen: 'nov_img/BHC_FUSSION_Caja.png' },
+                { nombre: 'BHC FUSSION_Sobre', precio: 799, imagen: 'nov_img/BHC_FUSSION_Sobre.png' },
+                { nombre: 'BHC GLORIUM_Restaurador', precio: 21.499, imagen: 'nov_img/BHC_GLORIUM_Restaurador.png' },
+                { nombre: 'BHC Shampoo_240', precio: 2.499, imagen: 'nov_img/BHC_Shampoo_240.png' },
+                { nombre: 'BHC Shampoo_1900', precio: 11.799, imagen: 'nov_img/BHC_Shampoo_1900.png' },
+                { nombre: 'BHC CREA-LIFT_240', precio: 2.099, imagen: 'nov_img/BHC-CREA-LIFT_240_REV01.png' },
+                { nombre: 'BHC GLORIUM_Restaurador-Cajax15', precio: 18.799, imagen: 'nov_img/BHC-GLORIUM_Restaurador-Cajax15.png' },
+                { nombre: 'BHC SPLENDOR_Nutricion_980', precio: 11.799, imagen: 'nov_img/BHC-SPLENDOR_Nutricion_980.png' },
+                { nombre: 'FAMILY Balsam_1900', precio: 11.799, imagen: 'nov_img/FAMILY-Balsam_1900.png' },
+                { nombre: 'FAMILY Shampoo_1900', precio: 11.799, imagen: 'nov_img/FAMILY-Shampoo_1900.png' },
+                { nombre: 'LUMINESCENCE 150', precio: 8.899, imagen: 'nov_img/LUMINESCENCE_150.png' },
+                { nombre: 'LUMINESCENCE 900', precio: 18.832, imagen: 'nov_img/LUMINESCENCE_900.png' },
+                { nombre: 'LUMINESCENCE Family', precio: 24.999, imagen: 'nov_img/LUMINESCENCE_Family.png' },
+                { nombre: 'NATIVE A_Balsam240', precio: 4.299, imagen: 'nov_img/NATIVE_A_Balsam240_REV02.png' },
+                { nombre: 'NATIVE A_Nutricion220', precio: 4.299, imagen: 'nov_img/NATIVE_A_Nutricion220_REV02.png' },
+                { nombre: 'NATIVE A_Shampoo240_REV02', precio: 4.299, imagen: 'nov_img/NATIVE_A_Shampoo240_REV02.png' },
+                { nombre: 'NATIVE IonizadoFX-15_Caja', precio: 5.799, imagen: 'nov_img/Native_IonizadoFX-15_Caja.png' },
+                { nombre: 'NATIVE IonizadoFX-15_Familia', precio: 18.799, imagen: 'nov_img/Native_IonizadoFX-15_Familia.png' },
+                { nombre: 'NATIVE A_Balsam_1900', precio: 11.799, imagen: 'nov_img/NATIVE-A_Balsam_1900_REV02.png' },
+                { nombre: 'NATIVE A_Balsam_3900', precio: 19.999, imagen: 'nov_img/NATIVE-A_Balsam_3900_REV02.png' },
+                { nombre: 'NATIVE A_Familia2', precio: 14.999, imagen: 'nov_img/NATIVE-A_Familia2.png' },
+                { nombre: 'NATIVE A_Nutricion_980', precio: 11.799, imagen: 'nov_img/NATIVE-A_Nutricion_980_REV04.png' },
+                { nombre: 'NATIVE A_Nutricion-CajaSobre', precio: 18.799, imagen: 'nov_img/NATIVE-A_Nutricion-CajaSobre.png' },
+                { nombre: 'NATIVE A_Nutricion-Sobre', precio: 799, imagen: 'nov_img/NATIVE-A_Nutricion-Sobre.png' },
+                { nombre: 'NATIVE A_Restaurador', precio: 799, imagen: 'nov_img/NATIVE-A_Restaurador_REV04.png' },
+                { nombre: 'NATIVE A_Restaurador-Cajax15', precio: 18.799, imagen: 'nov_img/NATIVE-A_Restaurador-Cajax15_REV02.png' },
+                { nombre: 'NATIVE A_Shampoo_1900', precio: 11.799, imagen: 'nov_img/NATIVE-A_Shampoo_1900_REV02.png' },
+                { nombre: 'NATIVE A_Shampoo_3900', precio: 19.999, imagen: 'nov_img/NATIVE-A_Shampoo_3900_REV03.png' },
+                { nombre: 'NATIVE CC_CKColors-Interior2', precio: 0, imagen: 'nov_img/NATIVE-CC_CKColors-Interior2.png' },
+                { nombre: 'NATIVE CKCOLORS-Pack+Pomo', precio: 2.499, imagen: 'nov_img/NATIVE-CKCOLORS-Pack+Pomo.png' },
+                { nombre: 'NATIVE-DL LUREX_KromaSaver_690-NEW', precio: 18.799, imagen: 'nov_img/NATIVE-DL-LUREX_KromaSaver_690-NEW.png' },
+                { nombre: 'NATIVE-DL LUREX-UltraRapidoMentolado_690-NEW', precio: 18.799, imagen: 'nov_img/NATIVE-DL-LUREX-UltraRapidoMentolado_690-NEW.png' },
+                { nombre: 'NATIVE K_Balsam_240', precio: 4.299, imagen: 'nov_img/NATIVE-K_Balsam_240_REV02.png' },
+                { nombre: 'NATIVE K_Balsam_1900', precio: 11.799, imagen: 'nov_img/NATIVE-K_Balsam_1900_REV01.png' },
+                { nombre: 'NATIVE K_Balsam_3900', precio: 19.999, imagen: 'nov_img/NATIVE-K_Balsam_3900_REV02.png' },
+                { nombre: 'NATIVE K_Familia2', precio: 14.999, imagen: 'nov_img/NATIVE-K_Familia2.png' },
+                { nombre: 'NATIVE K_Nutricion_220', precio: 4.299, imagen: 'nov_img/NATIVE-K_Nutricion_220_REV02.png' },
+                { nombre: 'NATIVE K_Nutricion', precio: 2.099, imagen: 'nov_img/NATIVE-K_Nutricion_980_REV03.png' },
+                { nombre: 'NATIVE K_Nutricion_CajaSobres', precio: 18.799, imagen: 'nov_img/NATIVE-K_Nutricion_CajaSobres.png' },
+                { nombre: 'NATIVE K_Nutricion_Sobres', precio: 799, imagen: 'nov_img/NATIVE-K_Nutricion_Sobres.png' },
+                { nombre: 'NATIVE K_Restaurador', precio: 799, imagen: 'nov_img/NATIVE-K_Restaurador_REV04.png' },
+                { nombre: 'NATIVE K_Restaurador-Cajax15', precio: 18.799, imagen: 'nov_img/NATIVE-K_Restaurador-Cajax15_REV02.png' },
+                { nombre: 'NATIVE K_Shampoo_240', precio: 4.299, imagen: 'nov_img/NATIVE-K_Shampoo_240-REV02.png' },
+                { nombre: 'NATIVE K_Shampoo_1900', precio: 11.799, imagen: 'nov_img/NATIVE-K_Shampoo_1900_REV02.png' },
+                { nombre: 'NATIVE K_Shampoo_3900', precio: 19.999, imagen: 'nov_img/NATIVE-K_Shampoo_3900_REV03.png' },
+                { nombre: 'NATIVE KromaSaver-SH-MV_250', precio: 4.299, imagen: 'nov_img/NATIVE-KromaSaver-SH-MV_250.png' },
+                { nombre: 'NATIVE KromaSaver-SH-MV_1900', precio: 11.799, imagen: 'nov_img/NATIVE-KromaSaver-SH-MV_1900.png' },
+                { nombre: 'NATIVE L_Balsam_240', precio: 4.299, imagen: 'nov_img/NATIVE-L_Balsam_240_REV02.png' },
+                { nombre: 'NATIVE L_Balsam_1900', precio: 11.799, imagen: 'nov_img/NATIVE-L_Balsam_1900_REV01.png' },
+                { nombre: 'NATIVE L_Balsam_3900', precio: 19.999, imagen: 'nov_img/NATIVE-L_Balsam_3900_REV02.png' },
+                { nombre: 'NATIVE L_Familia2', precio: 14.999, imagen: 'nov_img/NATIVE-L_Familia2.png' },
+                { nombre: 'NATIVE L_Nutricion_220', precio: 4.299, imagen: 'nov_img/NATIVE-L_Nutricion_220_REV02.png' },
+                { nombre: 'NATIVE L_Nutricion_980', precio: 11.799, imagen: 'nov_img/NATIVE-L_Nutricion_980_REV03.png' },
+                { nombre: 'NATIVE L_Restaurador', precio: 2.099, imagen: 'nov_img/NATIVE-L_Restaurador_REV04.png' },
+                { nombre: 'NATIVE L_Restaurador-Cajax15', precio: 18.799, imagen: 'nov_img/NATIVE-L_Restaurador-Cajax15_REV02.png' },
+                { nombre: 'NATIVE L_Shampoo_240', precio: 4.299, imagen: 'nov_img/NATIVE-L_Shampoo_240_REV02.png' },
+                { nombre: 'NATIVE L_Shampoo_1900', precio: 11.799, imagen: 'nov_img/NATIVE-L_Shampoo_1900_REV02.png' },
+                { nombre: 'NATIVE L_Shampoo_3900', precio: 19.999, imagen: 'nov_img/NATIVE-L_Shampoo_3900_REV03.png' },
+                { nombre: 'NATIVE LUREX_CLASSIC_690', precio: 18.799, imagen: 'nov_img/NATIVE-LUREX_CLASSIC_690_REV02.png' },
+                { nombre: 'NATIVE LUREX_CLASSIC_Caja+Sobre', precio: 3.799, imagen: 'nov_img/NATIVE-LUREX_CLASSIC_Caja+Sobre.png' },
+                { nombre: 'NATIVE LUREX_PREMIUM_690', precio: 20.799, imagen: 'nov_img/NATIVE-LUREX_PREMIUM_690_REV01.png' },
+                { nombre: 'NATIVE+ Ablandador-Ampolla', precio: 2.099, imagen: 'nov_img/NATIVE+_Ablandador-Ampolla.png' },
+                { nombre: 'NATIVE+ Ablandador-Caja', precio: 18.799, imagen: 'nov_img/NATIVE+_Ablandador-Caja.png' },
+                { nombre: 'NEUTRO Shampoo_250', precio: 4.299, imagen: 'nov_img/NEUTRO-Shampoo_250_REV01.png' },
+                { nombre: 'NEUTRO Shampoo_1900', precio: 11.799, imagen: 'nov_img/NEUTRO-Shampoo_1900_REV02.png' },
+                { nombre: 'NEUTRO Shampoo_3900', precio: 19.999, imagen: 'nov_img/NEUTRO-Shampoo_3900.png' },
+                { nombre: 'OXIDANTE 9vol_1900', precio: 11.799, imagen: 'nov_img/OXIDANTE-9vol_1900.png' },
+                { nombre: 'OXIDANTE 9vol_4800', precio: 19.999, imagen: 'nov_img/OXIDANTE-9vol_4800.png' },
+                { nombre: 'OXIDANTE 20vol_900', precio: 7.799, imagen: 'nov_img/OXIDANTE-20vol_900.png' },
+                { nombre: 'OXIDANTE 20vol_1900', precio: 10.499, imagen: 'nov_img/OXIDANTE-20vol_1900.png' },
+                { nombre: 'OXIDANTE 20vol_4800', precio: 23.499, imagen: 'nov_img/OXIDANTE-20vol_4800.png' },
+                { nombre: 'OXIDANTE 30vol_1900', precio: 12.799, imagen: 'nov_img/OXIDANTE-30vol_1900.png' },
+                { nombre: 'OXIDANTE 30vol_4800', precio: 24.999, imagen: 'nov_img/OXIDANTE-30vol_4800.png' },
+                { nombre: 'OXIDANTE 40vol_1900', precio: 17.499, imagen: 'nov_img/OXIDANTE-40vol_1900.png' },
+                { nombre: 'OXIDANTE 40vol_4800', precio: 27.999, imagen: 'nov_img/OXIDANTE-40vol_4800.png' },
+                { nombre: 'QE Balsam_240', precio: 4.299, imagen: 'nov_img/QE-Balsam_240.png' },
+                { nombre: 'QE Balsam_1900', precio: 11.799, imagen: 'nov_img/QE-Balsam_1900.png' },
+                { nombre: 'QE Family', precio: 14.999, imagen: 'nov_img/QE-Family.png' },
+                { nombre: 'QE Nutricion_980', precio: 11.799, imagen: 'nov_img/QE-Nutricion_980.png' },
+                { nombre: 'QE Restaurador-Cajax15', precio: 18.799, imagen: 'nov_img/QE-Restaurador-Cajax15.png' },
+                { nombre: 'QE Restaurador', precio: 2.099, imagen: 'nov_img/QE-Restaurador.png' },
+                { nombre: 'QE Shampoo_240', precio: 4.299, imagen: 'nov_img/QE-Shampoo_240.png' },
+                { nombre: 'QE Shampoo_1900', precio: 11.799, imagen: 'nov_img/QE-Shampoo_1900.png' },
+                { nombre: 'QE Tratamiento_140+Caja_NEW', precio: 9.799, imagen: 'nov_img/QE-Tratamiento_140+Caja_NEW.png' },
+                { nombre: 'TF B+S_100', precio: 6.799, imagen: 'nov_img/TF-B+S_100.png' },
+                { nombre: 'TF CeraModeladora_70+Caja', precio: 5.799, imagen: 'nov_img/TF-CeraModeladora_70+Caja_2.png' },
+                { nombre: 'TF FIXGEL_220', precio: 4.299, imagen: 'nov_img/TF-FIXGEL_220_REV02.png' },
+                { nombre: 'TF FIXGEL_980', precio: 11.799, imagen: 'nov_img/TF-FIXGEL_980_REV02.png' },
+                { nombre: 'TF KEEPCURLY_250', precio: 4.299, imagen: 'nov_img/TF-KEEPCURLY_250_REV01.png' },
+                { nombre: 'TF MagicSerum_50', precio: 8.499, imagen: 'nov_img/TF-MagicSerum_50_3.png' },
+                { nombre: 'TRENDS APPS_Balsam_250', precio: 5.799, imagen: 'nov_img/TRENDS-APPS_Balsam_250.png' },
+                { nombre: 'TRENDS APPS_Balsam_1900', precio: 11.799, imagen: 'nov_img/TRENDS-APPS_Balsam_1900.png' },
+                { nombre: 'TRENDS APPS_ENutritiva_250', precio: 4.299, imagen: 'nov_img/TRENDS-APPS_ENutritiva_250.png' },
+                { nombre: 'TRENDS APPS_ENutritiva_980', precio: 11.799, imagen: 'nov_img/TRENDS-APPS_ENutritiva_980.png' },
+                { nombre: 'TRENDS APPS_Familia', precio: 18.799, imagen: 'nov_img/TRENDS-APPS_Familia.png' },
+                { nombre: 'TRENDS APPS_KeepCurly_250', precio: 4.299, imagen: 'nov_img/Trends-APPS_KeepCurly_250.png' },
+                { nombre: 'TRENDS APPS_LOWPOO_250', precio: 4.299, imagen: 'nov_img/TRENDS-APPS_LOWPOO_250.png' },
+                { nombre: 'TRENDS APPS_LOWPOO_1900', precio: 11.799, imagen: 'nov_img/TRENDS-APPS_LOWPOO_1900.png' },
+                { nombre: 'TRENDS APPS_Restaurador-Cajax15', precio: 18.799, imagen: 'nov_img/TRENDS-APPS_Restaurador-Cajax15.png' },
+                { nombre: 'TRENDS APPS_Restaurador', precio: 2.099, imagen: 'nov_img/TRENDS-APPS_Restaurador.png' },
+                { nombre: 'TRENDS HASHTAG_Balsam_250', precio: 4.299, imagen: 'nov_img/TRENDS-HASHTAG_Balsam_250.png' },
+                { nombre: 'TRENDS HASHTAG_Balsam_1900', precio: 11.799, imagen: 'nov_img/TRENDS-HASHTAG_Balsam_1900.png' },
+                { nombre: 'TRENDS HASHTAG_ENutritiva_250', precio: 4.299, imagen: 'nov_img/TRENDS-HASHTAG_ENutritiva_250.png' },
+                { nombre: 'TRENDS HASHTAG_ENutritiva_980', precio: 11.799, imagen: 'nov_img/TRENDS-HASHTAG_ENutritiva_980.png' },
+                { nombre: 'TRENDS HASHTAG_Familia', precio: 18.099, imagen: 'nov_img/TRENDS-HASHTAG_Familia.png' },
+                { nombre: 'TRENDS HASHTAG_Restaurador-Cajax15', precio: 18.799, imagen: 'nov_img/TRENDS-HASHTAG_Restaurador-Cajax15.png' },
+                { nombre: 'TRENDS HASHTAG_Restaurador', precio: 2.099, imagen: 'nov_img/TRENDS-HASHTAG_Restaurador.png' },
+                { nombre: 'TRENDS HASHTAG_Shampoo_250', precio: 4.299, imagen: 'nov_img/TRENDS-HASHTAG_Shampoo_250.png' },
+                { nombre: 'TRENDS HASHTAG_Shampoo_1900', precio: 11.799, imagen: 'nov_img/TRENDS-HASHTAG_Shampoo_1900.png' },
+                { nombre: 'TRENDS LOVE_Balsam_250', precio: 4.299, imagen: 'nov_img/TRENDS-LOVE_Balsam_250.png' },
+                { nombre: 'TRENDS LOVE_Balsam_1900', precio: 11.799, imagen: 'nov_img/TRENDS-LOVE_Balsam_1900.png' },
+                { nombre: 'TRENDS LOVE_ENutritiva_250', precio: 4.299, imagen: 'nov_img/TRENDS-LOVE_ENutritiva_250.png' },
+                { nombre: 'TRENDS LOVE_ENutritiva_980', precio: 11.799, imagen: 'nov_img/TRENDS-LOVE_ENutritiva_980.png' },
+                { nombre: 'TRENDS LOVE_Familia', precio: 18.099, imagen: 'nov_img/TRENDS-LOVE_Familia.png' },
+                { nombre: 'TRENDS LOVE_Restaurador-Cajax15', precio: 18.799, imagen: 'nov_img/TRENDS-LOVE_Restaurador-Cajax15.png' },
+                { nombre: 'TRENDS LOVE_Restaurador', precio: 2.099, imagen: 'nov_img/TRENDS-LOVE_Restaurador.png' },
+                { nombre: 'TRENDS LOVE_Shampoo_250', precio: 4.299, imagen: 'nov_img/TRENDS-LOVE_Shampoo_250.png' },
+                { nombre: 'TRENDS LOVE_Shampoo_1900', precio: 11.799, imagen: 'nov_img/TRENDS-LOVE_Shampoo_1900.png' }
+                
+            ],
+            alimentos: [
+                { nombre: 'shampoo keratina vegetal bamboo', precio: 6.499, imagen: 'novalook_img/novalook shampoo keratina vegetal bamboo.png' },
+                { nombre: 'acondicionador keratina vegetal bamboo', precio: 6.499, imagen: 'novalook_img/novalook acondicionador keratina vegetal bamboo.png' },
+                { nombre: 'mascaras keratina vegetal bamboo 1000ml', precio: 14.999, imagen: 'novalook_img/novalook mascaras keratina vegetal bamboo.png' },
+                { nombre: 'crema de peinar keratina vegetal bamboo', precio: 6.499, imagen: 'novalook_img/novalook crema de peinar keratina vegetal bamboo.png' },
+                { nombre: 'shampoo btx', precio: 9.799, imagen: 'novalook_img/novalook shampoo btx.png' },
+                { nombre: 'acondicionador btx', precio: 6.499, imagen: 'novalook_img/novalook acondicionador btx.png' },
+                { nombre: 'mascaras btx 1000ml', precio: 14.999, imagen: 'novalook_img/novalook mascaras btx.png' },
+                { nombre: 'crema de peinar btx', precio: 6.499, imagen: 'novalook_img/novalook crema de peinar btx.png' },
+                { nombre: 'shampoo argan y palta', precio: 9.799, imagen: 'novalook_img/novalook shampoo argan y palta.png' },
+                { nombre: 'acondicionador argan y palta', precio: 6.499, imagen: 'novalook_img/novalook acondicionador argan y palta.png' },
+                { nombre: 'mascaras argan y palta 1000ml', precio: 14.999, imagen: 'novalook_img/novalook mascaras argan y palta.png' },
+                { nombre: 'shampoo extra acido', precio: 9.799, imagen: 'novalook_img/novalook shampoo extra acido.png' },
+                { nombre: 'shampoo extra acido 325ml', precio: 6.499, imagen: 'novalook_img/novalook shampoo extra acido 325ml.png' },
+                { nombre: 'mascara extra acido 250ml', precio: 6.799, imagen: 'novalook_img/novalook mascara extra acido 250ml.png' },
+                { nombre: 'mascara extra acido 1000ml', precio: 14.999, imagen: 'novalook_img/novalook mascara extra acido 500ml.png' },
+                { nombre: 'acondicionador extra acido', precio: 9.799, imagen: 'novalook_img/novalook acondicionador extra acido.png' },
+                { nombre: 'acondicionador extra acido 325ml', precio: 6.499, imagen: 'novalook_img/novalook acondicionador extra acido 325ml.png' },
+                { nombre: 'shampoo neutro', precio: 9.799, imagen: 'novalook_img/novalook shampoo neutro.png' },
+                { nombre: 'shampoo neutro 325ml', precio: 6.499, imagen: 'novalook_img/novalook shampoo neutro 325ml.png' },
+                { nombre: 'acondicionador neutro', precio: 9.799, imagen: 'novalook_img/novalook acondicionador neutro.png' },
+                { nombre: 'acondicionador neutro 325ml', precio: 6.499, imagen: 'novalook_img/novalook acondicionador neutro 325ml.png' },
+                { nombre: 'shampoo nature', precio: 8.499, imagen: 'novalook_img/novalook shampoo nature.png' },
+                { nombre: 'acondicionador nature', precio: 8.499, imagen: 'novalook_img/novalook acondicionador nature.png' },
+                { nombre: 'mascara nature', precio: 8.499, imagen: 'novalook_img/novalook mascara nature.png' },
+                { nombre: 'crema de peinar nature', precio: 6.499, imagen: 'novalook_img/novalook crema de peinar nature.png' },
+                { nombre: 'ampollas btx p/u', precio: 2.499, imagen: 'novalook_img/novalook ampollas btx.png' },
+                { nombre: 'ampollas argan y palta p/u', precio: 2.499, imagen: 'novalook_img/novalook ampollas argan y palta.png' },
+                { nombre: 'ampollas keratina vegetal y bamboo p/u', precio: 2.499, imagen: 'novalook_img/novalook ampollas keratina vegetal y bamboo.png' },
+                { nombre: 'serum brillo extremo', precio: 14.999, imagen: 'novalook_img/novalook serum brillo extremo.png' },
+                { nombre: 'serum puntas perfectas', precio: 14.499, imagen: 'novalook_img/novalook serum puntas perfectas.png' },
+                { nombre: 'polvo decolorante blanco', precio: 23.999, imagen: 'novalook_img/novalook polvo decolorante blanco.png' },
+                { nombre: 'polvo decolorante celeste', precio: 23.999, imagen: 'novalook_img/novalook polvo decolorante celeste.png' },
+                { nombre: 'polvo decolorante mentolado', precio: 23.999, imagen: 'novalook_img/novalook polvo decolorante mentolado.png' },
+                { nombre: 'crema oxidante con keratina y perfumada vol 10', precio: 9.399, imagen: 'novalook_img/novalook crema oxidante con keratina y perfumada vol 10.png' },
+                { nombre: 'crema oxidante con keratina y perfumada vol 20', precio: 10.299, imagen: 'novalook_img/novalook crema oxidante con keratina y perfumada vol 20.png' },
+                { nombre: 'crema oxidante con keratina y perfumada vol 30', precio: 12.299, imagen: 'novalook_img/novalook crema oxidante con keratina y perfumada vol 30.png' },
+                { nombre: 'crema oxidante con keratina y perfumada vol 40', precio: 13.799, imagen: 'novalook_img/novalook crema oxidante con keratina y perfumada vol 40.png' },
+                { nombre: 'crema oxidante con keratina y perfumada vol 10 90ml', precio: 0, imagen: 'novalook_img/novalook crema oxidante con keratina y perfumada vol 10 90ml.png' },
+                { nombre: 'crema oxidante con keratina y perfumada vol 20 90ml', precio: 0, imagen: 'novalook_img/novalook crema oxidante con keratina y perfumada vol 20 90ml.png' },
+                { nombre: 'crema oxidante con keratina y perfumada vol 30 90ml', precio: 0, imagen: 'novalook_img/novalook crema oxidante con keratina y perfumada vol 30 90ml.png' },
+                { nombre: 'crema oxidante con keratina y perfumada vol 40 90ml', precio: 0, imagen: 'novalook_img/novalook crema oxidante con keratina y perfumada vol 40 90ml.png' },
+                { nombre: 'matizador platinium blonde blue 375ml', precio: 8.199, imagen: 'novalook_img/novalook matizador platinium blonde blue 375ml.png' },
+                { nombre: 'matizador platinium blonde blue 250ml', precio: 8.199, imagen: 'novalook_img/novalook matizador platinium blonde blue 250ml.png' },
+                { nombre: 'matizador platinium blonde violet 375ml.png', precio: 8.199, imagen: 'novalook_img/novalook matizador platinium blonde violet 375ml.png' },
+                { nombre: 'matizador platinium blonde violet 250ml', precio: 8.199, imagen: 'novalook_img/novalook matizador platinium blonde violet 250ml.png' },
+                { nombre: 'matizador silver dark 375ml', precio: 8.199, imagen: 'novalook_img/novalook matizador silver dark 375ml.png' },
+                { nombre: 'matizador silver dark 250ml', precio: 8.199, imagen: 'novalook_img/novalook matizador silver dark 250ml.png' },
+                { nombre: 'shampoo interse red', precio: 8.199, imagen: 'novalook_img/novalook shampoo interse red.png' },
+                { nombre: 'mascara interse red', precio: 8.199, imagen: 'novalook_img/novalook mascara interse red.png' },
+                { nombre: 'shampoo interse brown', precio: 8.199, imagen: 'novalook_img/novalook shampoo interse brown.png' },
+                { nombre: 'mascara interse brown', precio: 8.199, imagen: 'novalook_img/novalook mascara interse brown.png' },
+                { nombre: 'shampoo interse copper', precio: 8.199, imagen: 'novalook_img/novalook shampoo interse copper.png' },
+                { nombre: 'mascara interse copper', precio: 8.199, imagen: 'novalook_img/novalook mascara interse copper.png' },
+                { nombre: 'shampoo interse wine', precio: 8.199, imagen: 'novalook_img/novalook shampoo interse wine.png' },
+                { nombre: 'mascara interse wine', precio: 8.199, imagen: 'novalook_img/novalook mascara interse wine.png' },
+                { nombre: 'shampoo interse pink', precio: 8.199, imagen: 'novalook_img/novalook shampoo interse pink.png' },
+                { nombre: 'mascara interse pink', precio: 8.199, imagen: 'novalook_img/novalook mascara interse pink.png' },
+                { nombre: 'shampoo interse sky blue', precio: 8.199, imagen: 'novalook_img/novalook shampoo interse sky blue.png' },
+                { nombre: 'mascara interse sky blue', precio: 8.199, imagen: 'novalook_img/novalook mascara interse sky blue.png' }
+            ],
+            jardineria: [
+                { nombre: 'Shampoo so sexy', precio: 7.499, imagen: 'victa_img/Shampoo Victa so sexy.png' },
+                { nombre: 'mascara so sexy', precio: 6.799, imagen: 'victa_img/mascara victa so sexy.png' },
+                { nombre: 'terminacion capilar so sexy', precio: 7.499, imagen: 'victa_img/terminacion capilar victa so sexy.png' },
+                { nombre: 'ampolla so sexy', precio: 2.499, imagen: 'victa_img/ampolla victa so sexy.png' },
+                { nombre: 'shampoo so sexy 1lt', precio: 19.799, imagen: 'victa_img/victa shampoo so sexy 1lt.png' },
+                { nombre: 'mascara capilar', precio: 19.799, imagen: 'victa_img/victa mascara capilar.png' },
+                { nombre: 'serum se sexy', precio: 9.499, imagen: 'victa_img/victa serum se sexy.png' },
+                { nombre: 'protector so sexy', precio: 8.299, imagen: 'victa_img/victa protector so sexy.png' }
+
+            ]
+        };
+
+        // ===== COLORES DE TINTES PROFESIONALES =====
+        const coloresTintes = [
+            // Rubios
+            { nombre: 'Rubio Platino', codigo: '#F5F5DC', precio: 0, categoria: 'Rubio' },
+            { nombre: 'Rubio Ceniza', codigo: '#D2B48C', precio: 0, categoria: 'Rubio' },
+            { nombre: 'Rubio Dorado', codigo: '#FDD5B1', precio: 0, categoria: 'Rubio' },
+            { nombre: 'Rubio Oscuro', codigo: '#E8C547', precio: 0, categoria: 'Rubio' },
+            { nombre: 'Rubio Miel', codigo: '#F2C94C', precio: 0, categoria: 'Rubio' },
+            { nombre: 'Rubio Beige', codigo: '#F5DEB3', precio: 0, categoria: 'Rubio' },
+            { nombre: 'Rubio Champán', codigo: '#F7E6BC', precio: 0, categoria: 'Rubio' },
+            { nombre: 'Rubio Ceniza Oscuro', codigo: '#B8A082', precio: 0, categoria: 'Rubio' },
+            { nombre: 'Rubio Frío', codigo: '#C8B99C', precio: 0, categoria: 'Rubio' },
+            { nombre: 'Rubio Caliente', codigo: '#F2D2A9', precio: 0, categoria: 'Rubio' },
+
+            // Castaños
+            { nombre: 'Castaño Claro', codigo: '#A0522D', precio: 0, categoria: 'Castaño' },
+            { nombre: 'Castaño Medio', codigo: '#8B4513', precio: 0, categoria: 'Castaño' },
+            { nombre: 'Castaño Oscuro', codigo: '#654321', precio: 0, categoria: 'Castaño' },
+            { nombre: 'Castaño Chocolate', codigo: '#D2691E', precio: 0, categoria: 'Castaño' },
+            { nombre: 'Castaño Canela', codigo: '#CD853F', precio: 0, categoria: 'Castaño' },
+            { nombre: 'Castaño Dorado', codigo: '#B8860B', precio: 0, categoria: 'Castaño' },
+            { nombre: 'Castaño Acero', codigo: '#A0522D', precio: 0, categoria: 'Castaño' },
+            { nombre: 'Castaño Cobrizo', codigo: '#B87333', precio: 0, categoria: 'Castaño' },
+            { nombre: 'Castaño Marrón', codigo: '#8B4513', precio: 0, categoria: 'Castaño' },
+            { nombre: 'Castaño Tostado', codigo: '#A95C42', precio: 0, categoria: 'Castaño' },
+
+            // Negros
+            { nombre: 'Negro Azabache', codigo: '#0A0A0A', precio: 0, categoria: 'Negro' },
+            { nombre: 'Negro Natural', codigo: '#1C1C1C', precio: 0, categoria: 'Negro' },
+            { nombre: 'Negro Azulado', codigo: '#1B1B3A', precio: 0, categoria: 'Negro' },
+            { nombre: 'Negro Verde', codigo: '#1B4332', precio: 0, categoria: 'Negro' },
+            { nombre: 'Negro Marrón', codigo: '#3C1414', precio: 0, categoria: 'Negro' },
+            { nombre: 'Negro Violeta', codigo: '#2C1B47', precio: 0, categoria: 'Negro' },
+
+            // Rojos
+            { nombre: 'Rojo Fuego', codigo: '#DC143C', precio: 0, categoria: 'Rojo' },
+            { nombre: 'Rojo Carmesí', codigo: '#990000', precio: 0, categoria: 'Rojo' },
+            { nombre: 'Rojo Vino', codigo: '#722F37', precio: 0, categoria: 'Rojo' },
+            { nombre: 'Rojo Borgoña', codigo: '#800020', precio: 0, categoria: 'Rojo' },
+            { nombre: 'Rojo Cereza', codigo: '#DE3163', precio: 0, categoria: 'Rojo' },
+            { nombre: 'Rojo Sandía', codigo: '#FF1744', precio: 0, categoria: 'Rojo' },
+            { nombre: 'Rojo Coral', codigo: '#FF7F50', precio: 0, categoria: 'Rojo' },
+            { nombre: 'Rojo Terracota', codigo: '#E2725B', precio: 0, categoria: 'Rojo' },
+            { nombre: 'Rojo Intenso', codigo: '#B71C1C', precio: 0, categoria: 'Rojo' },
+            { nombre: 'Rojo Oscuro', codigo: '#8B0000', precio: 0, categoria: 'Rojo' },
+
+            // Violetas
+            { nombre: 'Violeta Intenso', codigo: '#8B008B', precio: 0, categoria: 'Violeta' },
+            { nombre: 'Púrpura Real', codigo: '#6B3FA0', precio: 0, categoria: 'Violeta' },
+            { nombre: 'Lila Claro', codigo: '#C8A2C8', precio: 0, categoria: 'Violeta' },
+            { nombre: 'Violeta Oscuro', codigo: '#4B0082', precio: 0, categoria: 'Violeta' },
+            { nombre: 'Púrpura Vibrante', codigo: '#9D00FF', precio: 0, categoria: 'Violeta' },
+            { nombre: 'Violeta Ceniza', codigo: '#7C4DFF', precio: 0, categoria: 'Violeta' },
+            { nombre: 'Lavanda', codigo: '#E6E6FA', precio: 0, categoria: 'Violeta' },
+            { nombre: 'Orquídea', codigo: '#DA70D6', precio: 0, categoria: 'Violeta' },
+
+            // Azules
+            { nombre: 'Azul Eléctrico', codigo: '#0080FF', precio: 0, categoria: 'Azul' },
+            { nombre: 'Azul Marino', codigo: '#000080', precio: 0, categoria: 'Azul' },
+            { nombre: 'Azul Cielo', codigo: '#87CEEB', precio: 0, categoria: 'Azul' },
+            { nombre: 'Azul Turquesa', codigo: '#40E0D0', precio: 0, categoria: 'Azul' },
+            { nombre: 'Azul Acero', codigo: '#4682B4', precio: 0, categoria: 'Azul' },
+            { nombre: 'Azul Cobalto', codigo: '#0047AB', precio: 0, categoria: 'Azul' },
+            { nombre: 'Azul Índigo', codigo: '#4B0082', precio: 0, categoria: 'Azul' },
+            { nombre: 'Azul Real', codigo: '#4169E1', precio: 0, categoria: 'Azul' },
+
+            // Verdes
+            { nombre: 'Verde Esmeralda', codigo: '#50C878', precio: 0, categoria: 'Verde' },
+            { nombre: 'Verde Bosque', codigo: '#228B22', precio: 0, categoria: 'Verde' },
+            { nombre: 'Verde Oliva', codigo: '#808000', precio: 0, categoria: 'Verde' },
+            { nombre: 'Verde Lima', codigo: '#32CD32', precio: 0, categoria: 'Verde' },
+            { nombre: 'Verde Menta', codigo: '#98FB98', precio: 0, categoria: 'Verde' },
+            { nombre: 'Verde Jade', codigo: '#00A86B', precio: 0, categoria: 'Verde' },
+            { nombre: 'Verde Musgo', codigo: '#8A9A5B', precio: 0, categoria: 'Verde' },
+            { nombre: 'Verde Pistacho', codigo: '#93C572', precio: 0, categoria: 'Verde' },
+
+            // Naranjas
+            { nombre: 'Naranja Vibrante', codigo: '#FF6600', precio: 0, categoria: 'Naranja' },
+            { nombre: 'Ámbar Oscuro', codigo: '#FFBF00', precio: 0, categoria: 'Naranja' },
+            { nombre: 'Naranja Mandarina', codigo: '#FF8300', precio: 0, categoria: 'Naranja' },
+            { nombre: 'Durazno', codigo: '#FFCBA4', precio: 0, categoria: 'Naranja' },
+            { nombre: 'Coral Claro', codigo: '#F88379', precio: 0, categoria: 'Naranja' },
+            { nombre: 'Salmon', codigo: '#FA8072', precio: 0, categoria: 'Naranja' },
+            { nombre: 'Melocotón', codigo: '#FFDAB9', precio: 0, categoria: 'Naranja' },
+            { nombre: 'Naranja Quemado', codigo: '#CC5500', precio: 0, categoria: 'Naranja' },
+
+            // Rosas
+            { nombre: 'Rosa Shock', codigo: '#FF1493', precio: 0, categoria: 'Rosa' },
+            { nombre: 'Fucsia Vibrante', codigo: '#FF00FF', precio: 0, categoria: 'Rosa' },
+            { nombre: 'Rosa Palo', codigo: '#FFC0CB', precio: 0, categoria: 'Rosa' },
+            { nombre: 'Rosa Profundo', codigo: '#E91E63', precio: 0, categoria: 'Rosa' },
+            { nombre: 'Rosa Dusty', codigo: '#D4A5A5', precio: 0, categoria: 'Rosa' },
+            { nombre: 'Rosa Viejo', codigo: '#C08081', precio: 0, categoria: 'Rosa' },
+            { nombre: 'Rosa Millennial', codigo: '#F7C6C7', precio: 0, categoria: 'Rosa' },
+            { nombre: 'Rosa Barbie', codigo: '#E0218A', precio: 0, categoria: 'Rosa' },
+
+            // Marrónes
+            { nombre: 'Marrón Chocolate', codigo: '#7B3F00', precio: 0, categoria: 'Marrón' },
+            { nombre: 'Café con Leche', codigo: '#C8A882', precio: 0, categoria: 'Marrón' },
+            { nombre: 'Marrón Caramelo', codigo: '#AF6E4D', precio: 0, categoria: 'Marrón' },
+            { nombre: 'Marrón Cuero', codigo: '#8B4513', precio: 0, categoria: 'Marrón' },
+            { nombre: 'Marrón Tostado', codigo: '#A0522D', precio: 0, categoria: 'Marrón' },
+            { nombre: 'Beige Oscuro', codigo: '#A0956B', precio: 0, categoria: 'Marrón' },
+            { nombre: 'Marrón Tabaco', codigo: '#6D4C41', precio: 0, categoria: 'Marrón' },
+            { nombre: 'Marrón Cognac', codigo: '#9A4620', precio: 0, categoria: 'Marrón' },
+
+            // Grises
+            { nombre: 'Gris Perla', codigo: '#C0C0C0', precio: 0, categoria: 'Gris' },
+            { nombre: 'Gris Acero', codigo: '#71797E', precio: 0, categoria: 'Gris' },
+            { nombre: 'Gris Charcoal', codigo: '#36454F', precio: 0, categoria: 'Gris' },
+            { nombre: 'Plata Metálico', codigo: '#C4CACE', precio: 0, categoria: 'Gris' },
+            { nombre: 'Gris Pizarra', codigo: '#708090', precio: 0, categoria: 'Gris' },
+            { nombre: 'Gris Humo', codigo: '#848884', precio: 0, categoria: 'Gris' },
+            { nombre: 'Gris Mercurio', codigo: '#E5E4E2', precio: 0, categoria: 'Gris' },
+            { nombre: 'Gris Antracita', codigo: '#293133', precio: 0, categoria: 'Gris' },
+
+            // Pastel
+            { nombre: 'Lavanda Suave', codigo: '#E6E6FA', precio: 0, categoria: 'Pastel' },
+            { nombre: 'Rosa Bebé', codigo: '#F4C2C2', precio: 0, categoria: 'Pastel' },
+            { nombre: 'Azul Bebé', codigo: '#89CFF0', precio: 0, categoria: 'Pastel' },
+            { nombre: 'Verde Menta Suave', codigo: '#F0FFF0', precio: 0, categoria: 'Pastel' },
+            { nombre: 'Amarillo Pastel', codigo: '#FDFD96', precio: 0, categoria: 'Pastel' },
+            { nombre: 'Melón Suave', codigo: '#FDBCB4', precio: 0, categoria: 'Pastel' },
+            { nombre: 'Lila Pastel', codigo: '#C8A2C8', precio: 0, categoria: 'Pastel' },
+            { nombre: 'Turquesa Pastel', codigo: '#AFEEEE', precio: 0, categoria: 'Pastel' }
+        ];
+
+        // ===== FUNCIONES DE NAVEGACIÓN =====
+        function mostrarCategoria(categoria) {
+            document.querySelectorAll('.productos-seccion, .colores-seccion').forEach(seccion => {
+                seccion.classList.remove('activa');
+            });
+            const seccion = document.getElementById(categoria);
+            if (seccion) {
+                seccion.classList.add('activa');
+                cargarProductos(categoria);
+            }
+            document.querySelector('.categorias-container').style.display = 'none';
+            document.querySelector('.header').style.display = 'none';
+            document.querySelector('.busqueda-container').style.display = 'none';
+            document.querySelector('.footer').style.display = 'none';
+            window.scrollTo(0, 0);
+        }
+
+        function mostrarColores() {
+            document.querySelectorAll('.productos-seccion').forEach(seccion => {
+                seccion.classList.remove('activa');
+            });
+            document.getElementById('colores').classList.add('activa');
+            cargarColores('todos');
+            document.querySelector('.categorias-container').style.display = 'none';
+            document.querySelector('.header').style.display = 'none';
+            document.querySelector('.busqueda-container').style.display = 'none';
+            document.querySelector('.footer').style.display = 'none';
+            window.scrollTo(0, 0);
+        }
+
+        function volverAlInicio() {
+            document.querySelectorAll('.productos-seccion, .colores-seccion').forEach(seccion => {
+                seccion.classList.remove('activa');
+            });
+            document.querySelector('.categorias-container').style.display = 'block';
+            document.querySelector('.header').style.display = 'block';
+            document.querySelector('.busqueda-container').style.display = 'block';
+            document.querySelector('.footer').style.display = 'block';
+            document.getElementById('resultados-busqueda').style.display = 'none';
+            window.scrollTo(0, 0);
+        }
+
+        // ===== CARGAR PRODUCTOS =====
+        function cargarProductos(categoria) {
+    const productos = productosPorCategoria[categoria];
+    const grid = document.getElementById(categoria).querySelector('.productos-grid');
+    grid.innerHTML = '';
+    
+    productos.forEach((producto, index) => {
+        // ✅ Solo es no disponible si EXPLÍCITAMENTE es false
+        const noDisponible = producto.disponible === false;
+        
+        const card = document.createElement('div');
+        card.className = `producto-card ${noDisponible ? 'no-disponible' : ''}`;
+        card.style.animationDelay = `${index * 0.1}s`;
+        card.style.position = 'relative'; // Para el tooltip
+        
+        const etiquetaNoDisponible = noDisponible 
+            ? '<div class="no-disponible-etiqueta">No Disponible</div>' 
+            : '';
+        
+        const boton = noDisponible 
+            ? '<button class="agregar-carrito">Agregar al carrito</button>'  // Deshabilitado por CSS
+            : `<button class="agregar-carrito" onclick="agregarAlCarrito('${producto.nombre}', ${producto.precio}, event)">Agregar al carrito</button>`;
+        
+        card.innerHTML = `
+            <div class="producto-imagen" style="position: relative;">
+                ${etiquetaNoDisponible}
+                <img src="${producto.imagen}" alt="${producto.nombre}">
+            </div>
+            <div class="producto-info">
+                <div class="producto-nombre">${producto.nombre}</div>
+                <div class="producto-precio">$${producto.precio}</div>
+                ${boton}
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+        // ===== CARGAR COLORES =====
+        function cargarColores(filtro = 'todos') {
+    const grid = document.getElementById('colores-grid');
+    grid.innerHTML = '';
+    const filtrados = filtro === 'todos' 
+        ? coloresTintes 
+        : coloresTintes.filter(c => c.categoria.toLowerCase() === filtro.toLowerCase());
+    
+    filtrados.forEach((color, index) => {
+        // ✅ Solo es no disponible si EXPLÍCITAMENTE es false
+        const noDisponible = color.disponible === false;
+        
+        const card = document.createElement('div');
+        card.className = `color-card ${noDisponible ? 'no-disponible' : ''}`;
+        card.style.animationDelay = `${index * 0.03}s`;
+        card.style.position = 'relative'; // Para el tooltip
+        
+        const etiquetaNoDisponible = noDisponible 
+            ? '<div class="no-disponible-etiqueta">Agotado</div>' 
+            : '';
+        
+        const boton = noDisponible 
+            ? '<button class="agregar-color-carrito">Agregar</button>'  // Deshabilitado por CSS
+            : `<button class="agregar-color-carrito" onclick="agregarColorAlCarrito('${color.nombre}', ${color.precio}, '${color.codigo}', event)">Agregar</button>`;
+        
+        card.innerHTML = `
+            <div style="position: relative;">
+                ${etiquetaNoDisponible}
+                <div class="color-muestra" style="background-color: ${color.codigo};"></div>
+            </div>
+            <div class="color-nombre">${color.nombre}</div>
+            <div class="color-codigo">${color.codigo}</div>
+            <div class="color-precio">$${color.precio}</div>
+            ${boton}
+        `;
+        grid.appendChild(card);
+    });
+    
+    document.querySelectorAll('.filtro-btn').forEach(btn => btn.classList.remove('activo'));
+    if (event && event.target) event.target.classList.add('activo');
+}
+
+        // ===== BÚSQUEDA EN TIEMPO REAL =====
+        function buscarProducto() {
+            const input = document.getElementById('busqueda-input').value.toLowerCase();
+            const resultadosDiv = document.getElementById('resultados-busqueda');
+            resultadosDiv.innerHTML = '';
+
+            if (input.length === 0) {
+                resultadosDiv.style.display = 'none';
+                return;
+            }
+
+            const resultados = [];
+
+            // Buscar en productos
+            Object.keys(productosPorCategoria).forEach(categoria => {
+                productosPorCategoria[categoria].forEach(producto => {
+                    if (producto.nombre.toLowerCase().includes(input)) {
+                        resultados.push({ ...producto, categoria });
+                    }
+                });
+            });
+
+            // Buscar en colores
+            coloresTintes.forEach(color => {
+                if (color.nombre.toLowerCase().includes(input)) {
+                    resultados.push({ ...color, categoria: 'colores', esColor: true });
+                }
+            });
+
+            if (resultados.length > 0) {
+                resultados.forEach(res => {
+                    const item = document.createElement('div');
+                    item.className = 'resultado-item';
+                    item.onclick = () => irAlProducto(res);
+                    item.innerHTML = `
+                        <div class="resultado-nombre">${res.nombre}</div>
+                        <div class="resultado-precio">$${res.precio}</div>
+                        <div class="resultado-categoria">${res.categoria}${res.esColor ? ' (Color)' : ''}</div>
+                    `;
+                    resultadosDiv.appendChild(item);
+                });
+                resultadosDiv.style.display = 'block';
+            } else {
+                resultadosDiv.innerHTML = '<div class="resultado-item">No se encontraron productos</div>';
+                resultadosDiv.style.display = 'block';
+            }
+        }
+
+        function irAlProducto(producto) {
+            if (producto.esColor) {
+                mostrarColores();
+                setTimeout(() => {
+                    const cards = document.querySelectorAll('.color-card');
+                    cards.forEach(card => {
+                        if (card.querySelector('.color-nombre').textContent === producto.nombre) {
+                            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            card.style.animation = 'pulse 1s';
+                            setTimeout(() => card.style.animation = '', 1000);
+                        }
+                    });
+                }, 300);
+            } else {
+                mostrarCategoria(producto.categoria);
+                setTimeout(() => {
+                    const cards = document.querySelectorAll('.producto-card');
+                    cards.forEach(card => {
+                        if (card.querySelector('.producto-nombre').textContent === producto.nombre) {
+                            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            card.style.animation = 'pulse 1s';
+                            setTimeout(() => card.style.animation = '', 1000);
+                        }
+                    });
+                }, 300);
+            }
+            document.getElementById('busqueda-input').value = '';
+            document.getElementById('resultados-busqueda').style.display = 'none';
+        }
+
+        // ===== CERRAR SUGERENCIAS AL HACER CLIC FUERA =====
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.busqueda-box')) {
+                document.getElementById('resultados-busqueda').style.display = 'none';
+            }
+        });
+
+        // ===== CARRITO =====
+        function toggleCarrito() {
+            const cont = document.getElementById('carrito-container');
+            cont.classList.toggle('activo');
+        }
+
+        function agregarAlCarrito(nombre, precio, event) {
+            const boton = event.target;
+            const card = boton.closest('.producto-card') || boton.closest('.color-card');
+            const imagen = card.querySelector('.producto-imagen img, .color-muestra');
+
+            if (!imagen) return;
+
+            const elementoVolador = imagen.cloneNode(true);
+            elementoVolador.classList.add('producto-volando');
+
+            const rect = imagen.getBoundingClientRect();
+            elementoVolador.style.left = rect.left + 'px';
+            elementoVolador.style.top = rect.top + 'px';
+            elementoVolador.style.width = rect.width + 'px';
+            elementoVolador.style.height = rect.height + 'px';
+            elementoVolador.style.objectFit = 'cover';
+
+            document.body.appendChild(elementoVolador);
+
+            const carritoIcono = document.getElementById('carrito-icono');
+            const carritoRect = carritoIcono.getBoundingClientRect();
+
+            elementoVolador.offsetHeight;
+
+            setTimeout(() => {
+                elementoVolador.style.left = carritoRect.left + 'px';
+                elementoVolador.style.top = carritoRect.top + 'px';
+                elementoVolador.style.width = '0px';
+                elementoVolador.style.height = '0px';
+                elementoVolador.style.opacity = '0';
+            }, 10);
+
+            setTimeout(() => {
+                const item = {
+                    id: Date.now(),
+                    nombre: nombre,
+                    precio: precio,
+                    cantidad: 1
+                };
+                const existente = carrito.find(i => i.nombre === nombre);
+                if (existente) {
+                    existente.cantidad++;
+                } else {
+                    carrito.push(item);
+                }
+                actualizarCarrito();
+                carritoIcono.classList.add('con-productos');
+                setTimeout(() => carritoIcono.classList.remove('con-productos'), 500);
+                elementoVolador.remove();
+            }, 800);
+        }
+
+        function agregarColorAlCarrito(nombre, precio, codigo, event) {
+            const nombreCompleto = `Tinte ${nombre} (${codigo})`;
+            agregarAlCarrito(nombreCompleto, precio, event);
+        }
+
+        function eliminarDelCarrito(id) {
+            carrito = carrito.filter(i => i.id !== id);
+            actualizarCarrito();
+        }
+
+       function actualizarCarrito() {
+    const cont = document.getElementById('items-carrito');
+    const total = document.getElementById('total-precio');
+    const cantidad = document.getElementById('cantidad-carrito');
+    const totalDiv = document.getElementById('carrito-total');
+
+    cont.innerHTML = '';
+    let suma = 0;
+    let cantidadTotal = 0;
+
+    carrito.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'carrito-item';
+        div.innerHTML = `
+            <div class="carrito-item-info">
+                <div class="carrito-item-nombre">${item.nombre}</div>
+                <div class="carrito-item-precio">$${item.precio} x ${item.cantidad}</div>
+            </div>
+            <button class="eliminar-item" onclick="eliminarDelCarrito(${item.id})">Eliminar</button>
+        `;
+        cont.appendChild(div);
+        suma += item.precio * item.cantidad;
+        cantidadTotal += item.cantidad;
+    });
+
+    // === APLICAR DESCUENTO ===
+    const { descuento, mensaje } = aplicarDescuento(cantidadTotal);
+    const descuentoValor = suma * descuento;
+    const totalConDescuento = suma - descuentoValor;
+
+    cantidad.textContent = cantidadTotal;
+    total.textContent = totalConDescuento.toFixed(2);
+
+    // Mostrar descuento si aplica
+    if (descuento > 0) {
+        const descuentoDiv = document.createElement('div');
+        descuentoDiv.className = 'carrito-item';
+        descuentoDiv.innerHTML = `
+            <div class="carrito-item-info">
+                <div class="carrito-item-nombre">Descuento aplicado</div>
+                <div class="carrito-item-precio" style="color: #28a745;">-$${descuentoValor.toFixed(2)}</div>
+            </div>
+        `;
+        cont.appendChild(descuentoDiv);
+    }
+
+    totalDiv.style.display = carrito.length > 0 ? 'block' : 'none';
+}
+
+        function generarLinkCompra() {
+            if (carrito.length === 0) return;
+            let mensaje = '🛒 *Compra de Tintes* 🛒\n\n';
+            let total = 0;
+            carrito.forEach(item => {
+                mensaje += `• ${item.nombre} - $${item.precio} x ${item.cantidad}\n`;
+                total += item.precio * item.cantidad;
+            });
+            mensaje += `\n*Total: $${total.toFixed(2)}*`;
+            const mensajeCodificado = encodeURIComponent(mensaje);
+            linkGenerado = `https://wa.me/5493834786741?text=${mensajeCodificado}`;
+            document.getElementById('link-texto').textContent = linkGenerado;
+            document.getElementById('link-compra').style.display = 'block';
+        }
+
+        function copiarLink() {
+            if (!linkGenerado) return;
+            navigator.clipboard.writeText(linkGenerado).then(() => {
+                alert('¡Link copiado al portapapeles!');
+            }).catch(() => {
+                const textArea = document.createElement('textarea');
+                textArea.value = linkGenerado;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('¡Link copiado al portapapeles!');
+            });
+        }
+
+        // ===== INICIALIZAR =====
+        Object.keys(productosPorCategoria).forEach(categoria => {
+            productosPorCategoria[categoria].forEach(producto => {
+                todosLosProductos.push({ ...producto, categoria });
+            });
+        });
+
+        coloresTintes.forEach(color => {
+            todosLosProductos.push({ ...color, categoria: 'colores', esColor: true });
+        });
+
+        // ===== SISTEMA DE DESCUENTO POR CANTIDAD =====
+function aplicarDescuento(cantidadTotal) {
+    const aviso = document.getElementById('descuento-aviso');
+    const titulo = document.getElementById('descuento-titulo');
+    const texto = document.getElementById('descuento-texto');
+
+    let descuento = 0;
+    let mensaje = '';
+    let clase = '';
+
+    if (cantidadTotal >= 20) {
+        descuento = 0.15;
+        mensaje = '¡Felicidades! Tienes un 15% de descuento en tu compra total.';
+        clase = 'rojo';
+    } else if (cantidadTotal >= 10) {
+        descuento = 0.08;
+        mensaje = '¡Genial! Tienes un 8% de descuento en tu compra total.';
+        clase = 'verde';
+    } else if (cantidadTotal >= 5) {
+        descuento = 0.05;
+        mensaje = '¡Buen trabajo! Tienes un 5% de descuento en tu compra total.';
+        clase = '';
+    } else {
+        aviso.style.display = 'none';
+        return { descuento: 0, totalConDescuento: 0 };
+    }
+
+    aviso.style.display = 'block';
+    aviso.className = 'descuento-aviso ' + clase;
+    titulo.textContent = `Descuento aplicado: ${(descuento * 100).toFixed(0)}%`;
+    texto.textContent = mensaje;
+
+    return { descuento, mensaje };
+}// Efecto llamativo: hacer brillar el total
+const totalDiv = document.querySelector('.total-texto');
+totalDiv.style.transition = 'all 0.5s ease';
+totalDiv.style.color = '#28a745';
+totalDiv.style.fontWeight = 'bold';
+setTimeout(() => {
+    totalDiv.style.color = '#333';
+}, 1500);
+
+        actualizarCarrito();
+
+        // ===== CONFIGURACIÓN DE HORARIOS =====
+const horariosTienda = [
+    { dia: 'Lunes', apertura: '09:30', cierre: '22:00', estado: 'abierto' },
+    { dia: 'Martes', apertura: '09:30', cierre: '22:00', estado: 'abierto' },
+    { dia: 'Miércoles', apertura: '09:30', cierre: '22:00', estado: 'abierto' },
+    { dia: 'Jueves', apertura: '09:30', cierre: '22:00', estado: 'abierto' },
+    { dia: 'Viernes', apertura: '09:30', cierre: '22:00', estado: 'abierto' },
+    { dia: 'Sábado', apertura: '09:30', cierre: '22:00', estado: 'abierto' },
+    { dia: 'Domingo', apertura: 'Cerrado', cierre: 'Cerrado', estado: 'cerrado' }
+];
+
+// ===== MOSTRAR UBICACIÓN =====
+function mostrarUbicacion() {
+    // Ocultar todo
+    document.querySelectorAll('.productos-seccion, .colores-seccion, .categorias-container, .header, .busqueda-container, .footer').forEach(el => {
+        el.classList.remove('activa');
+        el.style.display = 'none';
+    });
+    
+    // Mostrar ubicación
+    document.getElementById('ubicacion').classList.add('activa');
+    document.getElementById('ubicacion').style.display = 'block';
+    
+    // Generar horarios
+    generarHorarios();
+    
+    window.scrollTo(0, 0);
+}
+
+// ===== GENERAR HORARIOS =====
+function generarHorarios() {
+    const grid = document.getElementById('horarios-grid');
+    grid.innerHTML = '';
+    
+    const hoy = new Date().getDay(); // 0 = Domingo, 1 = Lunes...
+    const diaActual = hoy === 0 ? 6 : hoy - 1; // Ajustar para que lunes sea 0
+    
+    horariosTienda.forEach((horario, index) => {
+        const esHoy = index === diaActual;
+        const claseEstado = horario.estado === 'abierto' ? 'abierto' : 'cerrado';
+        const horaTexto = horario.estado === 'abierto' 
+            ? `${horario.apertura} - ${horario.cierre}` 
+            : 'Cerrado';
+        const estadoTexto = esHoy ? 'Hoy' : (horario.estado === 'abierto' ? 'Abierto' : 'Cerrado');
+        
+        const item = document.createElement('div');
+        item.className = `horario-item ${claseEstado} ${esHoy ? 'especial' : ''}`;
+        item.innerHTML = `
+            <div>
+                <div class="horario-dia">${horario.dia} ${esHoy ? '⭐' : ''}</div>
+                <div class="horario-hora">${horaTexto}</div>
+            </div>
+            <div class="horario-estado">${estadoTexto}</div>
+        `;
+        grid.appendChild(item);
+    });
+}
+
+// ===== VOLVER AL INICIO (modificado) =====
+function volverAlInicio() {
+    // Ocultar ubicación
+    document.getElementById('ubicacion').classList.remove('activa');
+    document.getElementById('ubicacion').style.display = 'none';
+    
+    // Mostrar todo lo demás
+    document.querySelector('.categorias-container').style.display = 'block';
+    document.querySelector('.header').style.display = 'block';
+    document.querySelector('.busqueda-container').style.display = 'block';
+    document.querySelector('.footer').style.display = 'block';
+    
+    // Ocultar secciones de productos
+    document.querySelectorAll('.productos-seccion, .colores-seccion').forEach(seccion => {
+        seccion.classList.remove('activa');
+    });
+    
+    document.getElementById('resultados-busqueda').style.display = 'none';
+    window.scrollTo(0, 0);
+}
+    </script>
+</body>
+</html>
