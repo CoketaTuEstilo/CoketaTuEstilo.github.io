@@ -2942,5 +2942,83 @@ document.getElementById('formDatos').addEventListener('keypress', function(e) {
   </div>
 </div>
 
+<!-- ===== BOTÓN FLOTANTE WHATSAPP ===== -->
+<a href="https://wa.me/5493834988696?text=Hola,%20quiero%20agendar%20un%20contacto%20con%20ustedes" 
+   class="whatsapp-flotante" 
+   target="_blank" 
+   title="Chatear por WhatsApp">
+   
+  <!-- Logo de WhatsApp (SVG) -->
+  <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16 0C7.164 0 0 7.164 0 16c0 2.826.738 5.477 2.024 7.784L.032 32l8.38-1.97A15.89 15.89 0 0016 32c8.836 0 16-7.164 16-16S24.836 0 16 0zm8.058 22.15c-.348.984-2.034 1.79-2.82 1.904-.756.11-1.476.348-4.964-1.024-4.194-1.68-6.876-5.922-7.082-6.192-.204-.27-1.692-2.25-1.692-4.29 0-2.042 1.076-3.042 1.458-3.456.384-.414.828-.518 1.104-.518.276 0 .552 0 .792.012.27.012.636-.102.996.762.348.84 1.188 2.922 1.296 3.132.108.21.18.456.036.738-.144.276-.216.456-.432.696-.216.24-.456.504-.654.678-.216.192-.444.402-.318.798.126.396.588 1.95 1.26 3.156.864 1.542 1.596 2.1 1.92 2.334.324.228.648.192.876-.012.228-.198.972-1.116 1.224-1.5.252-.384.504-.324.84-.192.336.132 2.154 1.014 2.526 1.2.372.186.618.276.708.432.09.156.066.9-.282 1.884z" fill="#fff"/>
+  </svg>
+  
+  <span class="whatsapp-texto">Nuestro WhatsApp</span>
+</a>
+
+<style>
+/* ===== BOTÓN FLOTANTE WHATSAPP ===== */
+.whatsapp-flotante {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #25D366;
+  color: white;
+  text-decoration: none;
+  padding: 12px 20px 12px 14px;
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+  transition: all 0.3s ease;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.whatsapp-flotante:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+  background: #128C7E;
+}
+
+.whatsapp-flotante svg {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.whatsapp-texto {
+  white-space: nowrap;
+}
+
+/* En móviles: solo el logo */
+@media (max-width: 600px) {
+  .whatsapp-flotante {
+    padding: 12px;
+    border-radius: 50%;
+  }
+  .whatsapp-texto {
+    display: none;
+  }
+  .whatsapp-flotante svg {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* Animación de pulso sutil */
+@keyframes pulse-whatsapp {
+  0%, 100% { box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4); }
+  50% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.6); }
+}
+
+.whatsapp-flotante {
+  animation: pulse-whatsapp 2s infinite;
+}
+</style>
+
 </body>
 </html>
