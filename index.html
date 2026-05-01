@@ -1058,6 +1058,101 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* ===== MODAL WHATSAPP ===== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+.modal-contenido {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 380px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  animation: modalEntrada 0.3s ease;
+}
+@keyframes modalEntrada {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+.modal-contenido h3 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+}
+.modal-contenido p {
+  color: #666;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+.campo {
+  margin-bottom: 1rem;
+}
+.campo label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  color: #444;
+  font-size: 0.85rem;
+}
+.campo input {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+.campo input:focus {
+  outline: none;
+  border-color: #25D366;
+}
+.campo.error input {
+  border-color: #ff4444;
+  background: #fff5f5;
+}
+.error-mensaje {
+  color: #ff4444;
+  font-size: 0.8rem;
+  margin-top: 0.2rem;
+  display: none;
+}
+.campo.error .error-mensaje {
+  display: block;
+}
+.modal-botones {
+  display: flex;
+  gap: 10px;
+  margin-top: 1.5rem;
+}
+.btn-cancelar, .btn-confirmar {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.btn-cancelar {
+  background: #f0f0f0;
+  color: #666;
+}
+.btn-confirmar {
+  background: #25D366;
+  color: white;
+  font-weight: 600;
+}
+.btn-confirmar:hover {
+  background: #128C7E;
+}
     </style>
 </head>
 <body>
@@ -1561,7 +1656,7 @@
     <div class="descuento-texto" id="descuento-texto"></div>
 </div>
             <div class="total-texto">Total: $<span id="total-precio">0</span></div>
-            <button class="comprar-total" onclick="generarLinkCompra()">Comprar Total</button>
+            <button class="comprar-total" onclick="abrirModalCompra()">Comprar Total</button>
             <div class="link-compra" id="link-compra" style="display: none;">
                 <div class="link-texto" id="link-texto"></div>
                 <button class="copiar-link" onclick="copiarLink()">Copiar Link</button>
@@ -2737,6 +2832,115 @@ function volverAlInicio() {
     document.getElementById('resultados-busqueda').style.display = 'none';
     window.scrollTo(0, 0);
 }
+
+// ===== CONFIGURACIÓN =====
+const CONFIG = {
+  telefonoEmpresa: '5493834988696',
+};
+
+// ===== MODAL =====
+function abrirModalCompra() {
+  if (!carrito || carrito.length === 0) {
+    alert('Tu carrito está vacío.');
+    return;
+  }
+  document.getElementById('modalDatos').style.display = 'flex';
+  document.querySelectorAll('.campo').forEach(c => c.classList.remove('error'));
+}
+
+function cerrarModal() {
+  document.getElementById('modalDatos').style.display = 'none';
+}
+
+function validarYEnviar() {
+  const nombre = document.getElementById('nombre').value.trim();
+  const apellido = document.getElementById('apellido').value.trim();
+  const telefono = document.getElementById('telefono').value.trim().replace(/\D/g, '');
+  let valido = true;
+
+  if (nombre.length < 2) { mostrarError('nombre', 'El nombre es obligatorio'); valido = false; }
+  else { quitarError('nombre'); }
+
+  if (apellido.length < 2) { mostrarError('apellido', 'El apellido es obligatorio'); valido = false; }
+  else { quitarError('apellido'); }
+
+  if (telefono.length < 10) { mostrarError('telefono', 'Mínimo 10 dígitos'); valido = false; }
+  else { quitarError('telefono'); }
+
+  if (!valido) return;
+
+  let listaProductos = '';
+  let total = 0;
+  carrito.forEach((item, index) => {
+    const subtotal = item.precio * item.cantidad;
+    total += subtotal;
+    listaProductos += `${index + 1}. ${item.nombre} x${item.cantidad} = $${subtotal.toLocaleString('es-AR')}\n`;
+  });
+
+  const mensaje = `🛒 *NUEVO PEDIDO*\n\n👤 *Cliente:* ${nombre} ${apellido}\n📱 *Teléfono:* ${telefono}\n\n📦 *Productos:*\n${listaProductos}\n💰 *Total:* $${total.toLocaleString('es-AR')}\n\n✅ Confirmo mi pedido.`;
+
+  window.open(`https://wa.me/${CONFIG.telefonoEmpresa}?text=${encodeURIComponent(mensaje)}`, '_blank');
+
+  cerrarModal();
+  document.getElementById('formDatos').reset();
+}
+
+function mostrarError(campoId, mensaje) {
+  const contenedor = document.getElementById(campoId).closest('.campo');
+  contenedor.classList.add('error');
+  let errorDiv = contenedor.querySelector('.error-mensaje');
+  if (!errorDiv) {
+    errorDiv = document.createElement('div');
+    errorDiv.className = 'error-mensaje';
+    contenedor.appendChild(errorDiv);
+  }
+  errorDiv.textContent = mensaje;
+}
+
+function quitarError(campoId) {
+  const contenedor = document.getElementById(campoId).closest('.campo');
+  if (contenedor) contenedor.classList.remove('error');
+}
+
+// Cerrar al hacer clic fuera
+document.getElementById('modalDatos').addEventListener('click', function(e) {
+  if (e.target === this) cerrarModal();
+});
+
+// Enviar con Enter
+document.getElementById('formDatos').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    validarYEnviar();
+  }
+});
     </script>
+
+    <!-- ===== MODAL WHATSAPP ===== -->
+<div id="modalDatos" class="modal-overlay" style="display:none;">
+  <div class="modal-contenido">
+    <h3>📋 Datos de contacto</h3>
+    <p>Completa tus datos para enviar tu pedido por WhatsApp:</p>
+    <form id="formDatos" onsubmit="return false;">
+      <div class="campo">
+        <label for="nombre">Nombre *</label>
+        <input type="text" id="nombre" placeholder="Tu nombre">
+      </div>
+      <div class="campo">
+        <label for="apellido">Apellido *</label>
+        <input type="text" id="apellido" placeholder="Tu apellido">
+      </div>
+      <div class="campo">
+        <label for="telefono">Teléfono *</label>
+        <input type="tel" id="telefono" placeholder="Ej: 3834988696">
+      </div>
+      <div class="modal-botones">
+        <button type="button" class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
+        <button type="button" class="btn-confirmar" onclick="validarYEnviar()">Enviar pedido</button>
+      </div>
+    </form>
+  </div>
+</div>
+    
 </body>
 </html>
