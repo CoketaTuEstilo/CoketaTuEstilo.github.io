@@ -1218,23 +1218,21 @@
     box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
 }
 
-/* ===== MÓVIL: Posición segura ===== */
+/* ===== MÓVIL: Posición ajustada ===== */
 @media (max-width: 600px) {
     .productos-seccion .volver-inicio {
-        /* Arriba en vez de abajo para evitar barras del sistema */
-        bottom: 65px;
-        top: 15px;
+        bottom: auto;
+        top: 80px; /* Bajado desde arriba */
         padding: 10px 20px;
         font-size: 0.85rem;
-        /* Más pequeño para no tapar */
-        transform: translateX(-50%) translateY(-10px);
+        transform: translateX(-50%) translateY(-100px);
     }
     
     /* Animación desde arriba en móvil */
     @keyframes botonEntrada {
         0% {
             opacity: 0;
-            transform: translateX(-50%) translateY(100px) scale(0.8);
+            transform: translateX(-50%) translateY(-100px) scale(0.8);
         }
         60% {
             opacity: 1;
@@ -1246,7 +1244,6 @@
         }
     }
     
-    /* Hover en móvil (tocar) */
     .productos-seccion .volver-inicio:hover {
         transform: translateX(-50%) translateY(2px);
     }
