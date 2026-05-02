@@ -1,10 +1,28 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <link rel="icon" type="image/png" href="icon coketa.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda Online - Coketa Tu Estilo</title>
     <style>
+        /* Logo al lado del título */
+.header {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo-link img {
+    height: 225px; /* Ajusta el tamaño */
+    width: auto;
+}
         /* ===== ESTILOS GENERALES ===== */
         * {
             margin: 0;
@@ -1156,11 +1174,12 @@
     </style>
 </head>
 <body>
-    <!-- ===== HEADER ===== -->
     <div class="header" id="inicio">
-        <h1 class="titulo-principal">Coketa Tu Estilo</h1>
-    </div>
-
+    <a href="#" class="logo-link">
+        <img src="logo coketa.png" alt="Coketa Tu Estilo">
+    </a>
+    <h1 class="titulo-principal">Coketa Tu Estilo</h1>
+</div>
     <!-- ===== BÚSQUEDA ===== -->
     <div class="busqueda-container">
         <div class="busqueda-box">
@@ -1738,48 +1757,48 @@
         // ===== BASE DE DATOS DE PRODUCTOS =====
         const productosPorCategoria = {
             Vella: [
-                { nombre: 'botox capilar 250cc', precio: 5.326, imagen: 'vella_img/vella botox capilar 250cc.png' },
-                { nombre: 'botox matizador 250cc', precio: 5.326, imagen: 'vella_img/vella botox matizador 250cc.png' },
-                { nombre: 'levanta muerto 250cc', precio: 5.326, imagen: 'vella_img/vella levanta muerto 250cc.png' },
-                { nombre: 'thermo keratina 250cc', precio: 5.326, imagen: 'vella_img/vella thermo keratina 250cc.png' },
-                { nombre: 'keratina plastificado 250cc', precio: 5.326, imagen: 'vella_img/vella keratina plastificado 250cc.png' },
-                { nombre: 'rescate inmediato 250cc', precio:  5.326, imagen: 'vella_img/vella rescate inmediato 250cc.png' },
-                { nombre: 'lifting capilar 250cc', precio: 5.326, imagen: 'vella_img/vella lifting capilar 250cc.png' },
+                { nombre: 'botox capilar 250cc', precio: 6.799, imagen: 'vella_img/vella botox capilar 250cc.png' },
+                { nombre: 'botox matizador 250cc', precio: 6.799, imagen: 'vella_img/vella botox matizador 250cc.png' },
+                { nombre: 'levanta muerto 250cc', precio: 6.799, imagen: 'vella_img/vella levanta muerto 250cc.png' },
+                { nombre: 'thermo keratina 250cc', precio: 6.799, imagen: 'vella_img/vella thermo keratina 250cc.png' },
+                { nombre: 'keratina plastificado 250cc', precio: 6.799, imagen: 'vella_img/vella keratina plastificado 250cc.png' },
+                { nombre: 'rescate inmediato 250cc', precio:  6.799, imagen: 'vella_img/vella rescate inmediato 250cc.png' },
+                { nombre: 'lifting capilar 250cc', precio: 6.799, imagen: 'vella_img/vella lifting capilar 250cc.png' },
                 { nombre: 'gel plex modelador', precio: 5.669, imagen: 'vella_img/vella gel plex modelador.png' },
-                { nombre: 'oro liquido', precio: 5.326, imagen: 'vella_img/vella oro liquido.png' },
-                { nombre: 'plastidicado sellador', precio: 5.326, imagen: 'vella_img/vella plastidicado sellador.png' },
-                { nombre: 'heat 365 protector', precio: 5.451, imagen: 'vella_img/vella heat 365 protector.png' },
-                { nombre: 'keratina hidroalizada', precio: 5.326, imagen: 'vella_img/vella keratina hidroalizada.png' },
-                { nombre: 'va-plex', precio: 5.228, imagen: 'vella_img/vella va-plex.png' },
-                { nombre: '5 en 1 spray para peinar', precio: 6.218, imagen: 'vella_img/vella 5 en 1 spray para peinar.png' },
+                { nombre: 'oro liquido', precio: 6.299, imagen: 'vella_img/vella oro liquido.png' },
+                { nombre: 'plastidicado sellador', precio: 6.299, imagen: 'vella_img/vella plastidicado sellador.png' },
+                { nombre: 'heat 365 protector', precio: 6.899, imagen: 'vella_img/vella heat 365 protector.png' },
+                { nombre: 'keratina hidroalizada', precio: 6.799, imagen: 'vella_img/vella keratina hidroalizada.png' },
+                { nombre: 'va-plex', precio: 6.799, imagen: 'vella_img/vella va-plex.png' },
+                { nombre: '5 en 1 spray para peinar', precio: 7.299, imagen: 'vella_img/vella 5 en 1 spray para peinar.png' },
                 { nombre: 'crema de peinar biocauterizador', precio: 7.799, imagen: 'vella_img/vella crema de peinar biocauterizador.png' },
-                { nombre: 'biotina tratamiento capilar', precio: 5.599, imagen: 'vella_img/vella biotina tratamiento capilar.png' },
-                { nombre: 'hidro nutricion', precio: 5.521, imagen: 'vella_img/vella hidro nutricion.png' },
-                { nombre: 'extra nutricion', precio: 3.973, imagen: 'vella_img/vella extra nutricion.png' },
-                { nombre: 'matizador violeta', precio: 5.116, imagen: 'vella_img/vella matizador violeta.png' },
-                { nombre: 'matizador black', precio: 5.116, imagen: 'vella_img/vella matizador black.png' },
-                { nombre: 'matizador rojo', precio: 5.116, imagen: 'vella_img/vella matizador rojo.png' },
+                { nombre: 'biotina tratamiento capilar', precio: 6.199, imagen: 'vella_img/vella biotina tratamiento capilar.png' },
+                { nombre: 'hidro nutricion', precio: 6.499, imagen: 'vella_img/vella hidro nutricion.png' },
+                { nombre: 'extra nutricion', precio: 5.199, imagen: 'vella_img/vella extra nutricion.png' },
+                { nombre: 'matizador violeta', precio: 6.799, imagen: 'vella_img/vella matizador violeta.png' },
+                { nombre: 'matizador black', precio: 6.799, imagen: 'vella_img/vella matizador black.png' },
+                { nombre: 'matizador rojo', precio: 6.799, imagen: 'vella_img/vella matizador rojo.png' },
                 { nombre: 'shampoo matizador violeta', precio: 7.765, imagen: 'vella_img/vella shampoo matizador violeta.png' },
                 { nombre: 'shampoo matizador black', precio: 8.198, imagen: 'vella_img/vella shampoo matizador black.png' },
                 { nombre: 'shampoo matizador rojo', precio: 7.765, imagen: 'vella_img/vella shampoo matizador rojo.png' },
-                { nombre: 'baño de crema 250g', precio: 4.308, imagen: 'vella_img/vella baño de crema btx extreme 250g.png' },
+                { nombre: 'baño de crema botox 250g', precio: 5.799, imagen: 'vella_img/vella baño de crema btx extreme 250g.png' },
                 { nombre: 'baño de crema btx extreme 1000g', precio: 11.851, imagen: 'vella_img/vella baño de crema btx extreme 1000g.png' },
-                { nombre: 'baño de crema keratina 250g', precio: 4.308, imagen: 'vella_img/vella baño de crema keratina 250g.png' },
+                { nombre: 'baño de crema keratina 250g', precio: 5.499, imagen: 'vella_img/vella baño de crema keratina 250g.png' },
                 { nombre: 'baño de crema keratina 1000g', precio: 11.851, imagen: 'vella_img/vella baño de crema keratina 1000g.png' },
-                { nombre: 'baño de crema ph extra acido 250g', precio: 4.308, imagen: 'vella_img/vella baño de crema ph extra acido 250g.png' },
+                { nombre: 'baño de crema ph extra acido 250g', precio: 4.799, imagen: 'vella_img/vella baño de crema ph extra acido 250g.png' },
                 { nombre: 'baño de crema ph extra acido 1000g', precio: 11.851, imagen: 'vella_img/vella baño de crema ph extra acido 1000g.png' },
                 { nombre: 'baño de crema argan 1000g', precio: 12.459, imagen: 'vella_img/vella baño de crema argan 1000g.png' },
                 { nombre: 'shampoo neutro', precio: 4.754, imagen: 'vella_img/vella shampoo neutro.png' },
                 { nombre: 'shampoo botox', precio: 5.716, imagen: 'vella_img/vella shampoo botox.png' },
                 { nombre: 'acondicionador botox', precio: 5.716, imagen: 'vella_img/vella acondicionador botox.png' },
-                { nombre: 'shampoo ortiga', precio: 5.144, imagen: 'vella_img/vella shampoo ortiga.png' },
-                { nombre: 'acondicionador ortiga', precio: 5.144, imagen: 'vella_img/vella acondicionador ortiga.png' },
-                { nombre: 'acondicionador keratina', precio: 5.144, imagen: 'vella_img/vella acondicionador keratina.png' },
-                { nombre: 'lifting capilar', precio: 7.612, imagen: 'vella_img/vella lifting capilar.png' },
+                { nombre: 'shampoo ortiga', precio: 5.799, imagen: 'vella_img/vella shampoo ortiga.png' },
+                { nombre: 'acondicionador ortiga', precio: 5.799, imagen: 'vella_img/vella acondicionador ortiga.png' },
+                { nombre: 'acondicionador keratina', precio: 5.799, imagen: 'vella_img/vella acondicionador keratina.png' },
+                { nombre: 'lifting capilar 250ml', precio: 7.612, imagen: 'vella_img/vella lifting capilar.png' },
                 { nombre: 'serum argan', precio: 6.525, imagen: 'vella_img/vella serum argan.png' },
                 { nombre: 'serum cristal', precio: 6.525, imagen: 'vella_img/vella serum cristal.png' },
-                { nombre: 'serum coco argan', precio: 4.461, imagen: 'vella_img/vella serum coco argan.png' },
-                { nombre: 'serum semi di lino', precio: 4.461, imagen: 'vella_img/vella serum semi di lino.png' },
+                { nombre: 'serum coco argan', precio: 5.399, imagen: 'vella_img/vella serum coco argan.png' },
+                { nombre: 'serum semi di lino', precio: 5.399, imagen: 'vella_img/vella serum semi di lino.png' },
                 { nombre: 'brillo final', precio: 8.701, imagen: 'vella_img/vella brillo final.png' },
                 { nombre: 'aceite de almendras', precio: 5.326, imagen: 'vella_img/vella aceite de almendras.png' },
                 { nombre: 'vella aceite de coco', precio: 5.326, imagen: 'vella_img/vella aceite de coco.png' },
@@ -1787,7 +1806,7 @@
                 { nombre: 'ampollas capilares ortiga', precio: 2.663, imagen: 'vella_img/vella ampollas capilares ortiga.png' },
                 { nombre: 'vella ampollas capilares silver', precio: 2.663, imagen: 'vella_img/vella ampollas capilares silver.png' },
                 { nombre: 'vella ampollas capilares cereza', precio: 2.663, imagen: 'vella_img/vella ampollas capilares cereza.png' },
-                { nombre: 'vella ampollas capilares coco', precio: 2.663, imagen: 'vella_img/vella ampollas capilares coco.png' },
+                { nombre: 'vella ampollas capilares coco', precio: 2.663, imagen: 'vella_img/vella ampollas capilares coco.png' }
             ],
             Bekim: [
                 { nombre: 'Shampoo Argan', precio: 4.774, imagen: 'bekim_img/bekim-shampoo-argan.png' },
@@ -1810,8 +1829,8 @@
                 { nombre: 'Crema De Peinar After Color', precio: 4.022, imagen: 'bekim_img/CREMA DE PEINAR-after-color-bekim.png' },
                 { nombre: 'Ampollas After Color', precio: 18.256, imagen: 'bekim_img/AMPOLLAS-after-color-bekim.png' },
                 { nombre: 'Mascara After Color', precio: 4.817, imagen: 'bekim_img/MÁSCARA-after-color-bekim.png' },
-                { nombre: 'Shampoo Violet Happy Blond', precio: 8.861, imagen: 'bekim_img/SHAMPOO VIOLET-happy-bekim.png' },
-                { nombre: 'Mascara Violet Happy Blond', precio: 7.937, imagen: 'bekim_img/MÁSCARA VIOLET-happy-bekim.png' },
+                { nombre: 'Mascara Violet Happy Blond', precio: 8.861, imagen: 'bekim_img/SHAMPOO VIOLET-happy-bekim.png' },
+                { nombre: 'Shampoo Violet Happy Blond', precio: 7.937, imagen: 'bekim_img/MÁSCARA VIOLET-happy-bekim.png' },
                 { nombre: 'Shampoo Blue Happy Blond', precio: 8.861, imagen: 'bekim_img/SHAMPOO BLUE-happy-bekim.png' },
                 { nombre: 'Mascara Blue Happy Blond', precio: 7.937, imagen: 'bekim_img/MÁSCARA BLUE-happy-bekim.png' },
                 { nombre: 'Shampoo equilibrid', precio: 5.044, imagen: 'bekim_img/SHAMPOO-equilibrid-bekim.png' },
@@ -1839,7 +1858,7 @@
                 { nombre: 'brazilian keratin blond botox smart 250g', precio: 6.888, imagen: 'bekim_img/bekim brazilian keratin blond botox smart 250g.png' },
                 { nombre: 'brazilian mascara chocolate dubai', precio: 11.136, imagen: 'bekim_img/bekim brazilian mascara chocolate dubai.png' },
                 { nombre: 'brazilian amino fusion', precio: 9.759, imagen: 'bekim_img/bekim brazilian amino fusion.png' },
-                { nombre: 'brazilian proteccion termica cherry', precio: 11.534, imagen: 'bekim_img/bekim brazilian proteccion termica cherry.png' },
+                { nombre: 'brazilian proteccion termica cherry', precio: 11.534, imagen: 'bekim_img/bekim brazilian proteccion termica cherry.png' }
             ],
             Skala: [
                 { nombre: 'frutastica uva shampoo', precio: 7.499, imagen: 'skala_img/skala frutastica uva shampoo.png' },
@@ -1865,70 +1884,70 @@
 
             ],
             Eurostil: [
-                { nombre: 'Difusor universal Eurostil, colores', precio: 0, imagen: 'eurostil_img/Difusor universal Eurostil, colores.png', disponible: false }, // ❌ Agotado,
-                { nombre: 'Plancha profesional IONIC', precio: 0, imagen: 'eurostil_img/eurostil Plancha profesional IONIC.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Secador NEO 3800', precio: 0, imagen: 'eurostil_img/eurostil Secador NEO 3800.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Secador NEO 3830', precio: 0, imagen: 'eurostil_img/eurostil Secador NEO 3830.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Máquinas corta cabello K-3600', precio: 0, imagen: 'eurostil_img/eurostil Máquinas corta cabello K-3600.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Máquinas corta cabello K-3700', precio: 0, imagen: 'eurostil_img/eurostil Máquinas corta cabello K-3700.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Cepillos térmicos púa nylon', precio: 0, imagen: 'eurostil_img/eurostil Cepillos térmicos púa nylon.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Cepillos térmicos cerámicos', precio: 0, imagen: 'eurostil_img/eurostil Cepillos térmicos cerámicos.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Cepillo plástico mango cuadrado nylon', precio: 0, imagen: 'eurostil_img/eurostil Cepillo plástico mango cuadrado nylon.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Cepillo rulo plástico', precio: 0, imagen: 'eurostil_img/eurostil Cepillo rulo plástico.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Cepillo crepar plano mezcla', precio: 0, imagen: 'eurostil_img/eurostil Cepillo crepar plano mezcla.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Cepillo goma fuelle nylon', precio: 0, imagen: 'eurostil_img/eurostil Cepillo goma fuelle nylon.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Cepillo neumático pua plástico', precio: 0, imagen: 'eurostil_img/eurostil Cepillo neumático pua plástico.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Cepillo esqueleto ovalado mezcla jabalí', precio: 0, imagen: 'eurostil_img/eurostil Cepillo esqueleto ovalado mezcla jabalí.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Cepillo neumático púa plástico pequeño', precio: 0, imagen: 'eurostil_img/eurostil Cepillo neumático púa plástico pequeño.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Cepillo neumático mango goma pua plástico pequeño', precio: 0, imagen: 'eurostil_img/eurostil Cepillo neumático mango goma pua plástico pequeño.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'eurostil Cepillo rectangular, púa plástico, mango circular', precio: 0, imagen: 'eurostil_img/eurostil Cepillo rectangular, púa plástico, mango circular.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Cepillo neumático púa plástico, mango circular', precio: 0, imagen: 'eurostil_img/eurostil Cepillo neumático púa plástico, mango circular.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Cepillo flexible fingers brush para rulos', precio: 0, imagen: 'eurostil_img/eurostil Cepillo flexible fingers brush para rulos.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Cepillo desenredar surtido bicolor', precio: 0, imagen: 'eurostil_img/eurostil Cepillo desenredar surtido bicolor.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Cepillo para champú masajeador', precio: 0, imagen: 'eurostil_img/Cepillo para champú masajeador.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Cepillo araña mango antideslizante, Colores', precio: 0, imagen: 'eurostil_img/eurostil Cepillo araña mango antideslizante, Colores.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Cepillo esqueleto grande nylon 1 púa', precio: 0, imagen: 'eurostil_img/eurostil Cepillo esqueleto grande nylon 1 púa.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Cepillos BABY', precio: 0, imagen: 'eurostil_img/eurostil Cepillos BABY.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Peine batidor nylon corte', precio: 0, imagen: 'eurostil_img/eurostil Peine batidor nylon corte.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Peine nylon púa hierro', precio: 0, imagen: 'eurostil_img/eurostil Peine nylon púa hierro.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Peine ahuecador curvado', precio: 0, imagen: 'eurostil_img/Peine ahuecador curvado.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Peine escarpidor púa ancha', precio: 0, imagen: 'eurostil_img/eurostil Peine escarpidor púa ancha.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Peine escarpidor púa doble grande', precio: 0, imagen: 'eurostil_img/eurostil Peine escarpidor púa doble grande.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Peine ahuecador mediano', precio: 0, imagen: 'eurostil_img/eurostil Peine ahuecador mediano.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Peine ahuecador pequeño', precio: 0, imagen: 'eurostil_img/eurostil Peine ahuecador pequeño.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Cepillo ahuecador profesional', precio: 0, imagen: 'eurostil_img/eurostil Cepillo ahuecador profesional.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Estuche cierre cristal', precio: 0, imagen: 'eurostil_img/eurostil Estuche cierre cristal.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Estuche peines', precio: 0, imagen: 'eurostil_img/eurostil Estuche peines.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Bote 60 peines púa hierro colores', precio: 0, imagen: 'eurostil_img/eurostil Bote 60 peines púa hierro colores.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Bote 60 peines batidor colores', precio: 0, imagen: 'eurostil_img/eurostil Bote 60 peines batidor colores.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Delantal trabajo cuerina', precio: 0, imagen: 'eurostil_img/Delantal trabajo cuerina.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Capa nylon', precio: 0, imagen: 'eurostil_img/Capa nylon.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Bol graduado con asa y goma antideslizante', precio: 0, imagen: 'eurostil_img/Bol graduado con asa y goma antideslizante.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Pincel de tintura grande', precio: 0, imagen: 'eurostil_img/Pincel de tintura grande.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Difusor universal Eurostil, colores', precio: 19.499, imagen: 'eurostil_img/Difusor universal Eurostil, colores.png'}, 
+                { nombre: 'Plancha profesional IONIC', precio: 189.499, imagen: 'eurostil_img/eurostil Plancha profesional IONIC.png'}, 
+                { nombre: 'Secador NEO 3800', precio: 128.499, imagen: 'eurostil_img/eurostil Secador NEO 3800.png'}, 
+                { nombre: 'Secador NEO 3830', precio: 144.799, imagen: 'eurostil_img/eurostil Secador NEO 3830.png'}, 
+                { nombre: 'Máquinas corta cabello K-3600', precio: 119.999, imagen: 'eurostil_img/eurostil Máquinas corta cabello K-3600.png'}, 
+                { nombre: 'Máquinas corta cabello K-3700', precio: 129.999, imagen: 'eurostil_img/eurostil Máquinas corta cabello K-3700.png'}, 
+                { nombre: 'Cepillos térmicos púa nylon 36mm', precio: 8.799, imagen: 'eurostil_img/eurostil Cepillos térmicos púa nylon.png'}, 
+                { nombre: 'Cepillos térmicos cerámicos 36mm', precio: 11.199, imagen: 'eurostil_img/eurostil Cepillos térmicos cerámicos.png'}, 
+                { nombre: 'Cepillo plástico mango cuadrado nylon', precio: 3.799, imagen: 'eurostil_img/eurostil Cepillo plástico mango cuadrado nylon.png'}, 
+                { nombre: 'Cepillo rulo plástico', precio: 4.799, imagen: 'eurostil_img/eurostil Cepillo rulo plástico.png'}, 
+                { nombre: 'Cepillo crepar plano mezcla', precio: 5.799, imagen: 'eurostil_img/eurostil Cepillo crepar plano mezcla.png'},
+                { nombre: 'Cepillo goma fuelle nylon', precio: 5.799, imagen: 'eurostil_img/eurostil Cepillo goma fuelle nylon.png'}, 
+                { nombre: 'Cepillo neumático pua plástico', precio: 6.799, imagen: 'eurostil_img/eurostil Cepillo neumático pua plástico.png'}, 
+                { nombre: 'Cepillo esqueleto ovalado mezcla jabalí', precio: 6.799, imagen: 'eurostil_img/eurostil Cepillo esqueleto ovalado mezcla jabalí.png'}, 
+                { nombre: 'Cepillo neumático púa plástico pequeño', precio: 4.499, imagen: 'eurostil_img/eurostil Cepillo neumático púa plástico pequeño.png'}, 
+                { nombre: 'Cepillo neumático mango goma pua plástico pequeño', precio: 6.799, imagen: 'eurostil_img/eurostil Cepillo neumático mango goma pua plástico pequeño.png'}, 
+                { nombre: 'eurostil Cepillo rectangular, púa plástico, mango circular', precio: 9.799, imagen: 'eurostil_img/eurostil Cepillo rectangular, púa plástico, mango circular.png'}, 
+                { nombre: 'Cepillo neumático púa plástico, mango circular', precio: 6.799, imagen: 'eurostil_img/eurostil Cepillo neumático púa plástico, mango circular.png'}, 
+                { nombre: 'Cepillo flexible fingers brush para rulos', precio: 13.499, imagen: 'eurostil_img/eurostil Cepillo flexible fingers brush para rulos.png'},
+                { nombre: 'Cepillo desenredar surtido bicolor', precio: 12.499, imagen: 'eurostil_img/eurostil Cepillo desenredar surtido bicolor.png'},
+                { nombre: 'Cepillo para champú masajeador', precio: 3.499, imagen: 'eurostil_img/Cepillo para champú masajeador.png'}, 
+                { nombre: 'Cepillo araña mango antideslizante, Colores', precio: 4.599, imagen: 'eurostil_img/eurostil Cepillo araña mango antideslizante, Colores.png'}, 
+                { nombre: 'Cepillo esqueleto grande nylon 1 púa', precio: 2.499, imagen: 'eurostil_img/eurostil Cepillo esqueleto grande nylon 1 púa.png'}, 
+                { nombre: 'Cepillos BABY', precio: 6.799, imagen: 'eurostil_img/eurostil Cepillos BABY.png'}, 
+                { nombre: 'Peine batidor nylon corte', precio: 1.799, imagen: 'eurostil_img/eurostil Peine batidor nylon corte.png'}, 
+                { nombre: 'Peine nylon púa hierro', precio: 2.499, imagen: 'eurostil_img/eurostil Peine nylon púa hierro.png'}, 
+                { nombre: 'Peine ahuecador curvado', precio: 2.199, imagen: 'eurostil_img/Peine ahuecador curvado.png'}, 
+                { nombre: 'Peine escarpidor púa ancha', precio: 2.799, imagen: 'eurostil_img/eurostil Peine escarpidor púa ancha.png'}, 
+                { nombre: 'Peine escarpidor púa doble grande', precio: 2.199, imagen: 'eurostil_img/eurostil Peine escarpidor púa doble grande.png'}, 
+                { nombre: 'Peine ahuecador mediano', precio: 2.799, imagen: 'eurostil_img/eurostil Peine ahuecador mediano.png'}, 
+                { nombre: 'Peine ahuecador pequeño', precio: 5.499, imagen: 'eurostil_img/eurostil Peine ahuecador pequeño.png'}, 
+                { nombre: 'Cepillo ahuecador profesional', precio: 7.499, imagen: 'eurostil_img/eurostil Cepillo ahuecador profesional.png'}, 
+                { nombre: 'Estuche cierre cristal', precio: 13.199, imagen: 'eurostil_img/eurostil Estuche cierre cristal.png'}, 
+                { nombre: 'Estuche peines', precio: 9.799, imagen: 'eurostil_img/eurostil Estuche peines.png'},
+                { nombre: 'Bote 60 peines púa hierro colores', precio: 121.999, imagen: 'eurostil_img/eurostil Bote 60 peines púa hierro colores.png'}, 
+                { nombre: 'Bote 60 peines batidor colores', precio: 72.999, imagen: 'eurostil_img/eurostil Bote 60 peines batidor colores.png'}, 
+                { nombre: 'Delantal trabajo cuerina', precio: 17.999, imagen: 'eurostil_img/Delantal trabajo cuerina.png'}, 
+                { nombre: 'Capa nylon', precio: 16.999, imagen: 'eurostil_img/Capa nylon.png'}, 
+                { nombre: 'Bol graduado con asa y goma antideslizante', precio: 3.199, imagen: 'eurostil_img/Bol graduado con asa y goma antideslizante.png'}, 
+                { nombre: 'Pincel de tintura grande', precio: 2.499, imagen: 'eurostil_img/Pincel de tintura grande.png'}, 
                 { nombre: 'Rollo papel aluminio', precio: 0, imagen: 'eurostil_img/Rollo papel aluminio.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Cuchara especial dosificadora', precio: 0, imagen: 'eurostil_img/Cuchara especial dosificadora.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Caja 80 tiras papel especial mechas', precio: 0, imagen: 'eurostil_img/Caja 80 tiras papel especial mechas.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Caja 80 tiras especial mechas aluminizadas 300x110 mm', precio: 0, imagen: 'eurostil_img/Caja 80 tiras especial mechas aluminizadas 300x110 mm.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Paleta mechas', precio: 0, imagen: 'eurostil_img/Paleta mechas.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Paletina especial mechas', precio: 0, imagen: 'eurostil_img/Paletina especial mechas.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Gorro goma para mechas', precio: 0, imagen: 'eurostil_img/Gorro goma para mechas.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Gorro silicona', precio: 0, imagen: 'eurostil_img/Gorro silicona.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Bolsa 12 gorros para mechas de látex, standard', precio: 0, imagen: 'eurostil_img/Bolsa 12 gorros para mechas de látex, standard.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Cuchara especial dosificadora', precio: 2.499, imagen: 'eurostil_img/Cuchara especial dosificadora.png'}, 
+                { nombre: 'Caja 80 tiras papel especial mechas', precio: 13.799, imagen: 'eurostil_img/Caja 80 tiras papel especial mechas.png'}, 
+                { nombre: 'Caja 80 tiras especial mechas aluminizadas 300x110 mm', precio: 24.499, imagen: 'eurostil_img/Caja 80 tiras especial mechas aluminizadas 300x110 mm.png'}, 
+                { nombre: 'Paleta mechas', precio: 2.799, imagen: 'eurostil_img/Paleta mechas.png'}, 
+                { nombre: 'Paletina especial mechas', precio: 2.499, imagen: 'eurostil_img/Paletina especial mechas.png'}, 
+                { nombre: 'Gorro goma para mechas', precio: 19.799, imagen: 'eurostil_img/Gorro goma para mechas.png'}, 
+                { nombre: 'Gorro silicona', precio: 19.499, imagen: 'eurostil_img/Gorro silicona.png'}, 
+                { nombre: 'Bolsa 12 gorros para mechas de látex, standard', precio: 25.499, imagen: 'eurostil_img/Bolsa 12 gorros para mechas de látex, standard.png'}, 
                 { nombre: 'Caja 1000 hojas papel Pollié', precio: 0, imagen: 'eurostil_img/Caja 1000 hojas papel Pollié.jpg', disponible: false }, // ❌ Agotado,,
                 { nombre: 'Dispensador 20 libritos x 200 hojas papel permanente', precio: 0, imagen: 'eurostil_img/Dispensador 20 libritos x 200 hojas papel permanente.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Caja 100 guantes látex blancos con poco polvo', precio: 0, imagen: 'eurostil_img/Caja 100 guantes látex blancos con poco polvo.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Caja 100 guantes vinilo con poco polvo', precio: 0, imagen: 'eurostil_img/Caja 100 guantes vinilo con poco polvo.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Caja 20 guantes nitrilo negros, sin polvo', precio: 0, imagen: 'eurostil_img/Caja 20 guantes nitrilo negros, sin polvo.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Bolsa 120 pinzas pequeñas', precio: 0, imagen: 'eurostil_img/Bolsa 120 pinzas pequeñas.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Hebilla pequeña colores', precio: 0, imagen: 'eurostil_img/Hebilla pequeña colores.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Broches separadores plástico', precio: 0, imagen: 'eurostil_img/Broches separadores plástico.png', disponible: false }, // ❌ Agotado,,
+                { nombre: 'Caja 100 guantes látex blancos con poco polvo', precio: 7.799, imagen: 'eurostil_img/Caja 100 guantes látex blancos con poco polvo.png'}, 
+                { nombre: 'Caja 100 guantes vinilo con poco polvo', precio: 9.799, imagen: 'eurostil_img/Caja 100 guantes vinilo con poco polvo.png'}, 
+                { nombre: 'Caja 20 guantes nitrilo negros, sin polvo', precio: 6.799, imagen: 'eurostil_img/Caja 20 guantes nitrilo negros, sin polvo.png'}, 
+                { nombre: 'Bolsa 120 pinzas pequeñas', precio: 0, imagen: 'eurostil_img/Bolsa 120 pinzas pequeñas.png'}, 
+                { nombre: 'Hebilla pequeña colores', precio: 2.499, imagen: 'eurostil_img/Hebilla pequeña colores.png'}, 
+                { nombre: 'Broches separadores plástico', precio: 13.499, imagen: 'eurostil_img/Broches separadores plástico.png'}, 
                 { nombre: 'Tijeras WAVES acero especial', precio: 0, imagen: 'eurostil_img/Tijeras WAVES acero especial.png', disponible: false }, // ❌ Agotado,,
                 { nombre: 'Tijeras WAVES acero especial 5,75', precio: 0, imagen: 'eurostil_img/Tijeras WAVES acero especial 5,75.png', disponible: false }, // ❌ Agotado,,
                 { nombre: 'TIjeras EVOLUTE LINE', precio: 0, imagen: 'eurostil_img/TIjeras EVOLUTE LINE.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Tijera profesional mango plástico', precio: 0, imagen: 'eurostil_img/Tijera profesional mango plástico.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Lavacabezas portátil', precio: 0, imagen: 'eurostil_img/Lavacabezas portátil.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Relleno moño circular', precio: 0, imagen: 'eurostil_img/Relleno moño circular.png', disponible: false }, // ❌ Agotado,,
-                { nombre: 'Paquete 5 rollos papel cuello', precio: 0, imagen: 'eurostil_img/Paquete 5 rollos papel cuello.png', disponible: false } // ❌ Agotado,
+                { nombre: 'Tijera profesional mango plástico', precio: 12.799, imagen: 'eurostil_img/Tijera profesional mango plástico.png'}, 
+                { nombre: 'Lavacabezas portátil', precio: 145.499, imagen: 'eurostil_img/Lavacabezas portátil.png'}, 
+                { nombre: 'Relleno moño circular', precio: 7.499, imagen: 'eurostil_img/Relleno moño circular.png'},
+                { nombre: 'Paquete 5 rollos papel cuello', precio: 5.799, imagen: 'eurostil_img/Paquete 5 rollos papel cuello.png'} 
             ],
             GianaB: [
                 { nombre: 'baño de crema nutritivo', precio: 11.799, imagen: 'gianna-b_img/gianna-b baño de crema nutritivo.png' },
@@ -1947,7 +1966,7 @@
                 { nombre: 'mascara matizadora silver', precio: 15.999, imagen: 'gianna-b_img/gianna-b mascara matizadora silver.png' },
                 { nombre: 'reparador capilar', precio: 8.094, imagen: 'gianna-b_img/gianna-b reparador capilar.png' },
                 { nombre: 'gianna-b shampoo', precio: 8.499, imagen: 'gianna-b_img/gianna-b shampoo.png' },
-                { nombre: 'gianna-b super set', precio: 8.499, imagen: 'gianna-b_img/gianna-b super set.png' },
+                { nombre: 'gianna-b super set', precio: 8.499, imagen: 'gianna-b_img/gianna-b super set.png' }
                 
             ],
             Iyosei: [
@@ -2213,7 +2232,7 @@
                 { nombre: 'shampoo so sexy 1lt', precio: 19.799, imagen: 'victa_img/victa shampoo so sexy 1lt.png' },
                 { nombre: 'mascara capilar', precio: 19.799, imagen: 'victa_img/victa mascara capilar.png' },
                 { nombre: 'serum se sexy', precio: 9.499, imagen: 'victa_img/victa serum se sexy.png' },
-                { nombre: 'protector so sexy', precio: 8.299, imagen: 'victa_img/victa protector so sexy.png' }
+                { nombre: 'protector so sexy', precio: 8.799, imagen: 'victa_img/victa protector so sexy.png' }
 
             ]
         };
@@ -2855,6 +2874,7 @@ function cerrarModal() {
 function validarYEnviar() {
   const nombre = document.getElementById('nombre').value.trim();
   const apellido = document.getElementById('apellido').value.trim();
+  const direccion = document.getElementById('direccion').value.trim();
   const telefono = document.getElementById('telefono').value.trim().replace(/\D/g, '');
   let valido = true;
 
@@ -2863,6 +2883,9 @@ function validarYEnviar() {
 
   if (apellido.length < 2) { mostrarError('apellido', 'El apellido es obligatorio'); valido = false; }
   else { quitarError('apellido'); }
+
+  if (direccion.length < 2) { mostrarError('direccion', 'La direccion es obligatorio'); valido = false; }
+  else { quitarError('direccion'); }
 
   if (telefono.length < 10) { mostrarError('telefono', 'Mínimo 10 dígitos'); valido = false; }
   else { quitarError('telefono'); }
@@ -2877,7 +2900,7 @@ function validarYEnviar() {
     listaProductos += `${index + 1}. ${item.nombre} x${item.cantidad} = $${subtotal.toLocaleString('es-AR')}\n`;
   });
 
-  const mensaje = `🛒 *NUEVO PEDIDO*\n\n👤 *Cliente:* ${nombre} ${apellido}\n📱 *Teléfono:* ${telefono}\n\n📦 *Productos:*\n${listaProductos}\n💰 *Total:* $${total.toLocaleString('es-AR')}\n\n✅ Confirmo mi pedido.`;
+  const mensaje = `🛒 *NUEVO PEDIDO*\n\n👤 *Cliente:* ${nombre} ${apellido}\n📱 *Direccion:* ${direccion}\n *Teléfono:* ${telefono}\n\n📦 *Productos:*\n${listaProductos}\n💰 *Total:* $${total.toLocaleString('es-AR')}\n\n✅ Confirmo mi pedido abonando en este alias: yohanadiaz517`;
 
   window.open(`https://wa.me/${CONFIG.telefonoEmpresa}?text=${encodeURIComponent(mensaje)}`, '_blank');
 
@@ -2929,6 +2952,10 @@ document.getElementById('formDatos').addEventListener('keypress', function(e) {
       <div class="campo">
         <label for="apellido">Apellido *</label>
         <input type="text" id="apellido" placeholder="Tu apellido">
+      </div>
+      <div class="campo">
+        <label for="direccion">Direccion *</label>
+        <input type="text" id="direccion" placeholder="Tu direccion">
       </div>
       <div class="campo">
         <label for="telefono">Teléfono *</label>
