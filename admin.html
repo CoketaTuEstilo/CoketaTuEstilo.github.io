@@ -63,9 +63,6 @@
     <script>
         const CLAVE_SECRETA = "5177"; 
 
-        // Variable blindada para evitar errores de sintaxis al cargar
-        let productosPorCategoria = JSON.parse(localStorage.getItem("preciosPermanentes")) || {};
-
         function verificarPassword() {
             let pass = document.getElementById("input-password").value;
             if (pass === CLAVE_SECRETA) {
@@ -90,7 +87,12 @@
         function cargarListaProductosIndividuales() {
             let selectProd = document.getElementById("select-producto");
             selectProd.innerHTML = "";
-            let baseDatosPrecios = JSON.parse(localStorage.getItem("preciosPermanentes")) || {};
+            let baseDatosPrecios = JSON.parse(localStorage.getItem("preciosPermanentes"));
+
+            if (!baseDatosPrecios) {
+                selectProd.innerHTML = "<option>Abre primero la tienda principal (index.html)</option>";
+                return;
+            }
 
             for (let categoria in baseDatosPrecios) {
                 if (Array.isArray(baseDatosPrecios[categoria])) {
@@ -115,7 +117,7 @@
 
             let baseDatosPrecios = JSON.parse(localStorage.getItem("preciosPermanentes"));
             if (!baseDatosPrecios) {
-                alert("Primero debes inicializar o tener productos en la tienda principal.");
+                alert("Primero debes abrir tu tienda principal para cargar los productos.");
                 return;
             }
 
