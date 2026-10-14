@@ -53,9 +53,9 @@
     </div>
 
     <script>
-        // AQUÍ PUEDES CAMBIAR TU CONTRASEÑA POR LA QUE QUIERAS
         const CLAVE_SECRETA = "5177"; 
-let productosPorCategoria = JSON.parse(localStorage.getItem("preciosPermanentes")) || {
+
+        let productosPorCategoria = JSON.parse(localStorage.getItem("preciosPermanentes")) || {
  "Vella" [
                 { nombre: 'botox capilar 250cc', precio: 6.799, imagen: 'vella_img/vella botox capilar 250cc.png' },
                 { nombre: 'botox matizador 250cc', precio: 6.799, imagen: 'vella_img/vella botox matizador 250cc.png' },
@@ -537,18 +537,45 @@ let productosPorCategoria = JSON.parse(localStorage.getItem("preciosPermanentes"
             ]
         
 ];
+
         function verificarPassword() {
             let pass = document.getElementById("input-password").value;
             if (pass === CLAVE_SECRETA) {
                 document.getElementById("login-box").style.display = "none";
                 document.getElementById("panel-contenido").style.display = "block";
+                cargarListaProductosIndividuales();
             } else {
                 alert("Contraseña incorrecta");
             }
         }
 
-      function guardarAjustePrecios() {
-            let lineaSeleccionada = document.getElementById("select-linea").value;
+        function cambiarModoSeleccion() {
+            let seleccion = document.getElementById("select-linea").value;
+            let bloqueIndividual = document.getElementById("bloque-producto-individual");
+            if (seleccion === "individual") {
+                bloqueIndividual.style.display = "block";
+            } else {
+                bloqueIndividual.style.display = "none";
+            }
+        }
+
+        function cargarListaProductosIndividuales() {
+            let selectProd = document.getElementById("select-producto");
+            selectProd.innerHTML = "";
+            let baseDatosPrecios = JSON.parse(localStorage.getItem("preciosPermanentes")) || productosPorCategoria;
+
+            for (let categoria in baseDatosPrecios) {
+                baseDatosPrecios[categoria].forEach(prod => {
+                    let option = document.createElement("option");
+                    option.value = prod.id;
+                    option.textContent = `[${categoria}] ${prod.nombre} (Actual: $${prod.precio})`;
+                    selectProd.appendChild(option);
+                });
+            }
+        }
+
+        function guardarAjustePrecios() {
+            let modo = document.getElementById("select-linea").value;
             let porcentaje = parseFloat(document.getElementById("input-porcentaje").value);
 
             if (isNaN(porcentaje)) {
@@ -556,32 +583,49 @@ let productosPorCategoria = JSON.parse(localStorage.getItem("preciosPermanentes"
                 return;
             }
 
-            // 1. Tomamos la base de precios actual (si ya fue modificada antes, usa esa; si es primera vez, usa la original de la tienda)
             let baseDatosPrecios = JSON.parse(localStorage.getItem("preciosPermanentes")) || productosPorCategoria;
 
-            // 2. Recorremos las categorías y aplicamos el porcentaje de forma acumulativa sobre el precio actual
-            for (let categoria in baseDatosPrecios) {
-                let esCategoriaAfectada = (lineaSeleccionada === "todos" || lineaSeleccionada === "linea-" + categoria.toLowerCase());
+            if (modo === "individual") {
+                let idBuscado = parseInt(document.getElementById("select-producto").value);
+                let encontrado = false;
 
-                if (esCategoriaAfectada) {
+                for (let categoria in baseDatosPrecios) {
                     baseDatosPrecios[categoria].forEach(prod => {
-                        let nuevoPrecio = prod.precio * (1 + (porcentaje / 100));
-                        prod.precio = Number(nuevoPrecio.toFixed(3));
+                        if (prod.id === idBuscado) {
+                            let nuevoPrecio = prod.precio * (1 + (porcentaje / 100));
+                            prod.precio = Number(nuevoPrecio.toFixed(3));
+                            encontrado = true;
+                        }
                     });
                 }
+                if (encontrado) {
+                    alert("¡Precio del producto individual actualizado con éxito!");
+                }
+            } else {
+                for (let categoria in baseDatosPrecios) {
+                    let esCategoriaAfectada = (modo === "todos" || modo === "linea-" + categoria.toLowerCase());
+
+                    if (esCategoriaAfectada) {
+                        baseDatosPrecios[categoria].forEach(prod => {
+                            let nuevoPrecio = prod.precio * (1 + (porcentaje / 100));
+                            prod.precio = Number(nuevoPrecio.toFixed(3));
+                        });
+                    }
+                }
+                alert("¡Precios de la línea/global actualizados con éxito!");
             }
 
-            // 3. Guardamos los nuevos precios como definitivos en el navegador
             localStorage.setItem("preciosPermanentes", JSON.stringify(baseDatosPrecios));
-            alert("¡Precios actualizados y acumulados con éxito! Ya se reflejan en tu tienda principal.");
+            cargarListaProductosIndividuales();
         }
 
         function resetearPrecios() {
-            if (confirm("¿Estás seguro de querer borrar todos los aumentos acumulados y volver a los precios originales de tu código?")) {
+            if (confirm("¿Estás seguro de querer borrar todos los aumentos acumulados y volver a los precios originales?")) {
                 localStorage.removeItem("preciosPermanentes");
                 alert("Precios restaurados a la normalidad.");
+                cargarListaProductosIndividuales();
             }
         }
     </script>
-</body>
+    </body>
 </html>
