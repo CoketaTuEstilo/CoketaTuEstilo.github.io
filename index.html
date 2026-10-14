@@ -1787,14 +1787,11 @@
 </div>
 
     <script>
-        // ===== VARIABLES GLOBALES =====
-        let carrito = [];
-        let linkGenerado = '';
-        let carritoAbierto = false;
-        let todosLosProductos = [];
+      let productosPorCategoria;
 
-        // ===== BASE DE DATOS DE PRODUCTOS =====
-        let productosPorCategoria = JSON.parse(localStorage.getItem("preciosPermanentes")) || {
+// Aquí defines tu listado completo y real UNA SOLA VEZ:
+const productosOriginales = {
+  
             Vella: [
                 { nombre: 'botox capilar 250cc', precio: 6.799, imagen: 'vella_img/vella botox capilar 250cc.png' },
                 { nombre: 'botox matizador 250cc', precio: 6.799, imagen: 'vella_img/vella botox matizador 250cc.png' },
@@ -2275,6 +2272,13 @@
 
             ]
         };
+        try {
+    let datosGuardados = localStorage.getItem("preciosPermanentes");
+    productosPorCategoria = datosGuardados ? JSON.parse(datosGuardados) : productosOriginales;
+} catch (error) {
+    localStorage.removeItem("preciosPermanentes");
+    productosPorCategoria = productosOriginales;
+}
 
         // ===== COLORES DE TINTES PROFESIONALES =====
         const coloresTintes = [
