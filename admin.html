@@ -87,10 +87,11 @@
         function cargarListaProductosIndividuales() {
             let selectProd = document.getElementById("select-producto");
             selectProd.innerHTML = "";
-            let baseDatosPrecios = JSON.parse(localStorage.getItem("preciosPermanentes"));
+            let baseDatosPrecios = JSON.parse(localStorage.getItem("preciosPermanentes")) || {};
 
-            if (!baseDatosPrecios) {
-                selectProd.innerHTML = "<option>Abre primero la tienda principal (index.html)</option>";
+            // Si está vacío, no bloqueamos con un alert feo, solo dejamos un aviso amigable sin romper nada
+            if (Object.keys(baseDatosPrecios).length === 0) {
+                selectProd.innerHTML = "<option>No hay precios cargados todavía</option>";
                 return;
             }
 
@@ -117,7 +118,7 @@
 
             let baseDatosPrecios = JSON.parse(localStorage.getItem("preciosPermanentes"));
             if (!baseDatosPrecios) {
-                alert("Primero debes abrir tu tienda principal para cargar los productos.");
+                alert("No se encontraron datos de productos en la memoria.");
                 return;
             }
 
